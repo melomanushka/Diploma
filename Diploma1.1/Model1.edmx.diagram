@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ad40d94111844f6cafcb0b49db2f21bc" Name="Diagram1">
+        <EntityTypeShape EntityType="Dimploma1Model.Appraisal" Width="1.5" PointX="7.5" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Attendance" Width="1.5" PointX="10.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Cabinet" Width="1.5" PointX="8.25" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Client" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Contract" Width="1.5" PointX="7.5" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Course" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.DiplomaOrCertificate" Width="1.5" PointX="9.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Discount" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.DiscountStudent" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Employee" Width="1.5" PointX="8.25" PointY="36.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.EmployeeRole" Width="1.5" PointX="6" PointY="37.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.FormOfStudy" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Group" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.GroupStudent" Width="1.5" PointX="10.5" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.InformationSource" Width="1.5" PointX="0.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Payment" Width="1.5" PointX="12.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.PaymentMethod" Width="1.5" PointX="10.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Price" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Requisite" Width="1.5" PointX="5.25" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Schedule" Width="1.5" PointX="10.5" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.StatusAttendance" Width="1.5" PointX="8.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.StatusContract" Width="1.5" PointX="5.25" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.StatusCourse" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Student" Width="1.5" PointX="5.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.StudentCourse" Width="1.5" PointX="7.5" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.TeacherCourse" Width="1.5" PointX="15.5" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.TeacherTask" Width="1.5" PointX="13.5" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.Time" Width="1.5" PointX="8.25" PointY="41" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.TypeCourse" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Dimploma1Model.TypeLesson" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="Dimploma1Model.FK_Appraisal_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Appraisal_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Appraisal_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Attendance_Schedule" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Attendance_StatusAttendance" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Attendance_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Schedule_Cabinet" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Client_InformationSource" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Contract_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_DiscountStudent_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Payment_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Student_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Contract_FormOfStudy" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Contract_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Contract_Requisite" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Contract_StatusContract" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Contract_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_DiplomaOrCertificate_Contract" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Payment_Contract" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Course_TypeCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Group_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Price_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Schedule_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_StudentCourse_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_TeacherCourse_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_DiscountStudent_Discount" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Employee_EmployeeRole" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Schedule_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_TeacherCourse_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_TeacherTask_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Group_StatusCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_GroupStudent_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Schedule_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_GroupStudent_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Payment_PaymentMethod" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Price_TypeLesson" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Schedule_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_Schedule_Time" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_StudentCourse_StatusCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_StudentCourse_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="Dimploma1Model.FK_TeacherTask_Student" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,2472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Dimploma1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appraisal">
+          <Key>
+            <PropertyRef Name="AppraisalID" />
+          </Key>
+          <Property Name="AppraisalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="Appraisal" Type="int" />
+          <Property Name="Cooment" Type="text" />
+          <Property Name="TeacherID" Type="int" />
+          <Property Name="DateAssessment" Type="date" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="ScheduleID" Type="int" />
+          <Property Name="StatusAttendanceID" Type="int" />
+        </EntityType>
+        <EntityType Name="Cabinet">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+          </Key>
+          <Property Name="CabinetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CabinetName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Interchangeability" Type="int" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PassporSeries" Type="nvarchar" MaxLength="50" />
+          <Property Name="PassportNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="SNILS" Type="nvarchar" MaxLength="50" />
+          <Property Name="IssuedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhenIssued" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationDate" Type="date" />
+          <Property Name="InformationSourceID" Type="int" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ContractID" />
+          </Key>
+          <Property Name="ContractID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreate" Type="date" />
+          <Property Name="DateStart" Type="date" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="PriceID" Type="int" />
+          <Property Name="RequisiteID" Type="int" />
+          <Property Name="FormOfStudyID" Type="int" Nullable="false" />
+          <Property Name="StatusContractID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuantityHours" Type="int" />
+          <Property Name="Description" Type="text" />
+          <Property Name="MaxNumOfStudentPerGroup" Type="int" />
+          <Property Name="IsActiveCourse" Type="bit" />
+          <Property Name="MinAge" Type="int" />
+          <Property Name="MaxAge" Type="int" />
+          <Property Name="TypeCourseID" Type="int" />
+        </EntityType>
+        <EntityType Name="DiplomaOrCertificate">
+          <Key>
+            <PropertyRef Name="DiplomaOrCertificateID" />
+          </Key>
+          <Property Name="DiplomaOrCertificateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeriesDiploma" Type="nvarchar" MaxLength="50" />
+          <Property Name="NumberDiploma" Type="nvarchar" MaxLength="50" />
+          <Property Name="NumberCertificate" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DiscountName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActiveDiscount" Type="bit" />
+          <Property Name="DiscountValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreation" Type="date" />
+          <Property Name="DateStart" Type="date" />
+          <Property Name="DateEnd" Type="date" />
+        </EntityType>
+        <EntityType Name="DiscountStudent">
+          <Key>
+            <PropertyRef Name="DiscountStudentID" />
+          </Key>
+          <Property Name="DiscountStudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DiscountID" Type="int" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="DateOfDiscountApplication" Type="date" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="EmployeeRoleID" Type="int" />
+          <Property Name="Comment" Type="text" />
+        </EntityType>
+        <EntityType Name="EmployeeRole">
+          <Key>
+            <PropertyRef Name="EmployeeRoleID" />
+          </Key>
+          <Property Name="EmployeeRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeRoleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FormOfStudy">
+          <Key>
+            <PropertyRef Name="FormOfStudyID" />
+          </Key>
+          <Property Name="FormOfStudyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormOfStudyName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="StatusCourseID" Type="int" />
+        </EntityType>
+        <EntityType Name="GroupStudent">
+          <Key>
+            <PropertyRef Name="GroupStudentID" />
+          </Key>
+          <Property Name="GroupStudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupID" Type="int" />
+          <Property Name="StudentID" Type="int" />
+        </EntityType>
+        <EntityType Name="InformationSource">
+          <Key>
+            <PropertyRef Name="InformationSourceID" />
+          </Key>
+          <Property Name="InformationSourceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InformationSourceName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="ContractID" Type="int" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="PaymentMethodID" Type="int" />
+          <Property Name="Note" Type="text" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentMethodName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PriceQuantity" Type="int" />
+          <Property Name="PricePerLesson" Type="bit" />
+          <Property Name="DatePrice" Type="date" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="TypeLessonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Requisite">
+          <Key>
+            <PropertyRef Name="RequisiteID" />
+          </Key>
+          <Property Name="RequisiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="INN" Type="nvarchar" MaxLength="50" />
+          <Property Name="KPP" Type="nvarchar" MaxLength="50" />
+          <Property Name="OGRN" Type="nvarchar" MaxLength="50" />
+          <Property Name="BIK" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AccountNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="CorrespondentAccount" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="NameOfDirector" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="int" Nullable="false" />
+          <Property Name="ClassDate" Type="date" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="GroupID" Type="int" />
+          <Property Name="TimeID" Type="int" />
+          <Property Name="CabinetID" Type="int" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="TeacherID" Type="int" />
+        </EntityType>
+        <EntityType Name="StatusAttendance">
+          <Key>
+            <PropertyRef Name="StatusAttendanceID" />
+          </Key>
+          <Property Name="StatusAttendanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusAttendanceName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StatusContract">
+          <Key>
+            <PropertyRef Name="StatusContractID" />
+          </Key>
+          <Property Name="StatusContractID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusContractName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StatusCourse">
+          <Key>
+            <PropertyRef Name="StatusCourseID" />
+          </Key>
+          <Property Name="StatusCourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusCourseName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthdate" Type="date" />
+        </EntityType>
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="StudentCourseID" />
+          </Key>
+          <Property Name="StudentCourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="StatusCourseID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TeacherCourse">
+          <Key>
+            <PropertyRef Name="TeacherCourseID" />
+          </Key>
+          <Property Name="TeacherCourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherID" Type="int" />
+          <Property Name="CourseID" Type="int" />
+        </EntityType>
+        <EntityType Name="TeacherTask">
+          <Key>
+            <PropertyRef Name="TeacherTaskID" />
+          </Key>
+          <Property Name="TeacherTaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Task" Type="text" />
+          <Property Name="DataTask" Type="date" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="TeacherID" Type="int" />
+          <Property Name="StatusTask" Type="bit" />
+        </EntityType>
+        <EntityType Name="Time">
+          <Key>
+            <PropertyRef Name="TimeID" />
+          </Key>
+          <Property Name="TimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeStart" Type="time" Precision="7" />
+          <Property Name="TimeEnd" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="TypeCourse">
+          <Key>
+            <PropertyRef Name="TypeCourseID" />
+          </Key>
+          <Property Name="TypeCourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeCourseName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TypeLesson">
+          <Key>
+            <PropertyRef Name="TypeLessonID" />
+          </Key>
+          <Property Name="TypeLessonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeLessonName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Appraisal_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Appraisal">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appraisal_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Appraisal">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appraisal_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Appraisal">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Schedule">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="ScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_StatusAttendance">
+          <End Role="StatusAttendance" Type="Self.StatusAttendance" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAttendance">
+              <PropertyRef Name="StatusAttendanceID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="StatusAttendanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_InformationSource">
+          <End Role="InformationSource" Type="Self.InformationSource" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InformationSource">
+              <PropertyRef Name="InformationSourceID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="InformationSourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_FormOfStudy">
+          <End Role="FormOfStudy" Type="Self.FormOfStudy" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormOfStudy">
+              <PropertyRef Name="FormOfStudyID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="FormOfStudyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Price">
+          <End Role="Price" Type="Self.Price" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price">
+              <PropertyRef Name="PriceID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="PriceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Requisite">
+          <End Role="Requisite" Type="Self.Requisite" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisite">
+              <PropertyRef Name="RequisiteID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="RequisiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_StatusContract">
+          <End Role="StatusContract" Type="Self.StatusContract" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusContract">
+              <PropertyRef Name="StatusContractID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="StatusContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_TypeCourse">
+          <End Role="TypeCourse" Type="Self.TypeCourse" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeCourse">
+              <PropertyRef Name="TypeCourseID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="TypeCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiplomaOrCertificate_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
+          <End Role="DiplomaOrCertificate" Type="Self.DiplomaOrCertificate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ContractID" />
+            </Principal>
+            <Dependent Role="DiplomaOrCertificate">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscountStudent_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="DiscountStudent" Type="Self.DiscountStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="DiscountStudent">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscountStudent_Discount">
+          <End Role="Discount" Type="Self.Discount" Multiplicity="1" />
+          <End Role="DiscountStudent" Type="Self.DiscountStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="DiscountStudent">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeRole">
+          <End Role="EmployeeRole" Type="Self.EmployeeRole" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRole">
+              <PropertyRef Name="EmployeeRoleID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmployeeRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_StatusCourse">
+          <End Role="StatusCourse" Type="Self.StatusCourse" Multiplicity="0..1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusCourse">
+              <PropertyRef Name="StatusCourseID" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="StatusCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupStudent_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="GroupStudent" Type="Self.GroupStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="GroupStudent">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupStudent_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="GroupStudent" Type="Self.GroupStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="GroupStudent">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ContractID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentMethod">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_TypeLesson">
+          <End Role="TypeLesson" Type="Self.TypeLesson" Multiplicity="0..1" />
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeLesson">
+              <PropertyRef Name="TypeLessonID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="TypeLessonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Cabinet">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cabinet">
+              <PropertyRef Name="CabinetID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CabinetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Time">
+          <End Role="Time" Type="Self.Time" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Time">
+              <PropertyRef Name="TimeID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TimeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_StatusCourse">
+          <End Role="StatusCourse" Type="Self.StatusCourse" Multiplicity="0..1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusCourse">
+              <PropertyRef Name="StatusCourseID" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="StatusCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherTask_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="TeacherTask" Type="Self.TeacherTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TeacherTask">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherTask_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="TeacherTask" Type="Self.TeacherTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="TeacherTask">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Dimploma1ModelContainer">
+          <EntitySet Name="Appraisal" EntityType="Self.Appraisal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cabinet" EntityType="Self.Cabinet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiplomaOrCertificate" EntityType="Self.DiplomaOrCertificate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscountStudent" EntityType="Self.DiscountStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormOfStudy" EntityType="Self.FormOfStudy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupStudent" EntityType="Self.GroupStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformationSource" EntityType="Self.InformationSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requisite" EntityType="Self.Requisite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusAttendance" EntityType="Self.StatusAttendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusContract" EntityType="Self.StatusContract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusCourse" EntityType="Self.StatusCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherCourse" EntityType="Self.TeacherCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherTask" EntityType="Self.TeacherTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Time" EntityType="Self.Time" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeCourse" EntityType="Self.TypeCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeLesson" EntityType="Self.TypeLesson" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Appraisal_Course" Association="Self.FK_Appraisal_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Appraisal" EntitySet="Appraisal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appraisal_Employee" Association="Self.FK_Appraisal_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Appraisal" EntitySet="Appraisal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appraisal_Student" Association="Self.FK_Appraisal_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Appraisal" EntitySet="Appraisal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Schedule" Association="Self.FK_Attendance_Schedule">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_StatusAttendance" Association="Self.FK_Attendance_StatusAttendance">
+            <End Role="StatusAttendance" EntitySet="StatusAttendance" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Student" Association="Self.FK_Attendance_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_InformationSource" Association="Self.FK_Client_InformationSource">
+            <End Role="InformationSource" EntitySet="InformationSource" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Client" Association="Self.FK_Contract_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_FormOfStudy" Association="Self.FK_Contract_FormOfStudy">
+            <End Role="FormOfStudy" EntitySet="FormOfStudy" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Price" Association="Self.FK_Contract_Price">
+            <End Role="Price" EntitySet="Price" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Requisite" Association="Self.FK_Contract_Requisite">
+            <End Role="Requisite" EntitySet="Requisite" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_StatusContract" Association="Self.FK_Contract_StatusContract">
+            <End Role="StatusContract" EntitySet="StatusContract" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Student" Association="Self.FK_Contract_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_TypeCourse" Association="Self.FK_Course_TypeCourse">
+            <End Role="TypeCourse" EntitySet="TypeCourse" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiplomaOrCertificate_Contract" Association="Self.FK_DiplomaOrCertificate_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="DiplomaOrCertificate" EntitySet="DiplomaOrCertificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscountStudent_Client" Association="Self.FK_DiscountStudent_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="DiscountStudent" EntitySet="DiscountStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscountStudent_Discount" Association="Self.FK_DiscountStudent_Discount">
+            <End Role="Discount" EntitySet="Discount" />
+            <End Role="DiscountStudent" EntitySet="DiscountStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeRole" Association="Self.FK_Employee_EmployeeRole">
+            <End Role="EmployeeRole" EntitySet="EmployeeRole" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_Course" Association="Self.FK_Group_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_StatusCourse" Association="Self.FK_Group_StatusCourse">
+            <End Role="StatusCourse" EntitySet="StatusCourse" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupStudent_Group" Association="Self.FK_GroupStudent_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="GroupStudent" EntitySet="GroupStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupStudent_Student" Association="Self.FK_GroupStudent_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="GroupStudent" EntitySet="GroupStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Client" Association="Self.FK_Payment_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Contract" Association="Self.FK_Payment_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentMethod" Association="Self.FK_Payment_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_Course" Association="Self.FK_Price_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_TypeLesson" Association="Self.FK_Price_TypeLesson">
+            <End Role="TypeLesson" EntitySet="TypeLesson" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Cabinet" Association="Self.FK_Schedule_Cabinet">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Course" Association="Self.FK_Schedule_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Employee" Association="Self.FK_Schedule_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Group" Association="Self.FK_Schedule_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Student" Association="Self.FK_Schedule_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Time" Association="Self.FK_Schedule_Time">
+            <End Role="Time" EntitySet="Time" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Client" Association="Self.FK_Student_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_Course" Association="Self.FK_StudentCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_StatusCourse" Association="Self.FK_StudentCourse_StatusCourse">
+            <End Role="StatusCourse" EntitySet="StatusCourse" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_Student" Association="Self.FK_StudentCourse_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Course" Association="Self.FK_TeacherCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Employee" Association="Self.FK_TeacherCourse_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherTask_Employee" Association="Self.FK_TeacherTask_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TeacherTask" EntitySet="TeacherTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherTask_Student" Association="Self.FK_TeacherTask_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="TeacherTask" EntitySet="TeacherTask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Dimploma1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Appraisal">
+          <Key>
+            <PropertyRef Name="AppraisalID" />
+          </Key>
+          <Property Name="AppraisalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="Appraisal1" Type="Int32" />
+          <Property Name="Cooment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherID" Type="Int32" />
+          <Property Name="DateAssessment" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Appraisal_Course" FromRole="Appraisal" ToRole="Course" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Appraisal_Employee" FromRole="Appraisal" ToRole="Employee" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Appraisal_Student" FromRole="Appraisal" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="ScheduleID" Type="Int32" />
+          <Property Name="StatusAttendanceID" Type="Int32" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Attendance_Schedule" FromRole="Attendance" ToRole="Schedule" />
+          <NavigationProperty Name="StatusAttendance" Relationship="Self.FK_Attendance_StatusAttendance" FromRole="Attendance" ToRole="StatusAttendance" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Attendance_Student" FromRole="Attendance" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Cabinet">
+          <Key>
+            <PropertyRef Name="CabinetID" />
+          </Key>
+          <Property Name="CabinetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CabinetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Interchangeability" Type="Int32" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Cabinet" FromRole="Cabinet" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassporSeries" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassportNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SNILS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IssuedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhenIssued" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationDate" Type="DateTime" Precision="0" />
+          <Property Name="InformationSourceID" Type="Int32" />
+          <NavigationProperty Name="InformationSource" Relationship="Self.FK_Client_InformationSource" FromRole="Client" ToRole="InformationSource" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_Client" FromRole="Client" ToRole="Contract" />
+          <NavigationProperty Name="DiscountStudent" Relationship="Self.FK_DiscountStudent_Client" FromRole="Client" ToRole="DiscountStudent" />
+          <NavigationProperty Name="Payment" Relationship="Self.FK_Payment_Client" FromRole="Client" ToRole="Payment" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_Client" FromRole="Client" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ContractID" />
+          </Key>
+          <Property Name="ContractID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreate" Type="DateTime" Precision="0" />
+          <Property Name="DateStart" Type="DateTime" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="PriceID" Type="Int32" />
+          <Property Name="RequisiteID" Type="Int32" />
+          <Property Name="FormOfStudyID" Type="Int32" Nullable="false" />
+          <Property Name="StatusContractID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Contract_Client" FromRole="Contract" ToRole="Client" />
+          <NavigationProperty Name="FormOfStudy" Relationship="Self.FK_Contract_FormOfStudy" FromRole="Contract" ToRole="FormOfStudy" />
+          <NavigationProperty Name="Price" Relationship="Self.FK_Contract_Price" FromRole="Contract" ToRole="Price" />
+          <NavigationProperty Name="Requisite" Relationship="Self.FK_Contract_Requisite" FromRole="Contract" ToRole="Requisite" />
+          <NavigationProperty Name="StatusContract" Relationship="Self.FK_Contract_StatusContract" FromRole="Contract" ToRole="StatusContract" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Contract_Student" FromRole="Contract" ToRole="Student" />
+          <NavigationProperty Name="DiplomaOrCertificate" Relationship="Self.FK_DiplomaOrCertificate_Contract" FromRole="Contract" ToRole="DiplomaOrCertificate" />
+          <NavigationProperty Name="Payment" Relationship="Self.FK_Payment_Contract" FromRole="Contract" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityHours" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MaxNumOfStudentPerGroup" Type="Int32" />
+          <Property Name="IsActiveCourse" Type="Boolean" />
+          <Property Name="MinAge" Type="Int32" />
+          <Property Name="MaxAge" Type="Int32" />
+          <Property Name="TypeCourseID" Type="Int32" />
+          <NavigationProperty Name="Appraisal" Relationship="Self.FK_Appraisal_Course" FromRole="Course" ToRole="Appraisal" />
+          <NavigationProperty Name="TypeCourse" Relationship="Self.FK_Course_TypeCourse" FromRole="Course" ToRole="TypeCourse" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Group_Course" FromRole="Course" ToRole="Group" />
+          <NavigationProperty Name="Price" Relationship="Self.FK_Price_Course" FromRole="Course" ToRole="Price" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Course" FromRole="Course" ToRole="Schedule" />
+          <NavigationProperty Name="StudentCourse" Relationship="Self.FK_StudentCourse_Course" FromRole="Course" ToRole="StudentCourse" />
+          <NavigationProperty Name="TeacherCourse" Relationship="Self.FK_TeacherCourse_Course" FromRole="Course" ToRole="TeacherCourse" />
+        </EntityType>
+        <EntityType Name="DiplomaOrCertificate">
+          <Key>
+            <PropertyRef Name="DiplomaOrCertificateID" />
+          </Key>
+          <Property Name="DiplomaOrCertificateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeriesDiploma" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumberDiploma" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumberCertificate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_DiplomaOrCertificate_Contract" FromRole="DiplomaOrCertificate" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DiscountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActiveDiscount" Type="Boolean" />
+          <Property Name="DiscountValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreation" Type="DateTime" Precision="0" />
+          <Property Name="DateStart" Type="DateTime" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="DiscountStudent" Relationship="Self.FK_DiscountStudent_Discount" FromRole="Discount" ToRole="DiscountStudent" />
+        </EntityType>
+        <EntityType Name="DiscountStudent">
+          <Key>
+            <PropertyRef Name="DiscountStudentID" />
+          </Key>
+          <Property Name="DiscountStudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DiscountID" Type="Int32" Nullable="false" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfDiscountApplication" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_DiscountStudent_Client" FromRole="DiscountStudent" ToRole="Client" />
+          <NavigationProperty Name="Discount" Relationship="Self.FK_DiscountStudent_Discount" FromRole="DiscountStudent" ToRole="Discount" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EmployeeRoleID" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Appraisal" Relationship="Self.FK_Appraisal_Employee" FromRole="Employee" ToRole="Appraisal" />
+          <NavigationProperty Name="EmployeeRole" Relationship="Self.FK_Employee_EmployeeRole" FromRole="Employee" ToRole="EmployeeRole" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Employee" FromRole="Employee" ToRole="Schedule" />
+          <NavigationProperty Name="TeacherCourse" Relationship="Self.FK_TeacherCourse_Employee" FromRole="Employee" ToRole="TeacherCourse" />
+          <NavigationProperty Name="TeacherTask" Relationship="Self.FK_TeacherTask_Employee" FromRole="Employee" ToRole="TeacherTask" />
+        </EntityType>
+        <EntityType Name="EmployeeRole">
+          <Key>
+            <PropertyRef Name="EmployeeRoleID" />
+          </Key>
+          <Property Name="EmployeeRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeRoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_EmployeeRole" FromRole="EmployeeRole" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="FormOfStudy">
+          <Key>
+            <PropertyRef Name="FormOfStudyID" />
+          </Key>
+          <Property Name="FormOfStudyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormOfStudyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_FormOfStudy" FromRole="FormOfStudy" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="StatusCourseID" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Group_Course" FromRole="Group" ToRole="Course" />
+          <NavigationProperty Name="StatusCourse" Relationship="Self.FK_Group_StatusCourse" FromRole="Group" ToRole="StatusCourse" />
+          <NavigationProperty Name="GroupStudent" Relationship="Self.FK_GroupStudent_Group" FromRole="Group" ToRole="GroupStudent" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Group" FromRole="Group" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="GroupStudent">
+          <Key>
+            <PropertyRef Name="GroupStudentID" />
+          </Key>
+          <Property Name="GroupStudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupID" Type="Int32" />
+          <Property Name="StudentID" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_GroupStudent_Group" FromRole="GroupStudent" ToRole="Group" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_GroupStudent_Student" FromRole="GroupStudent" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="InformationSource">
+          <Key>
+            <PropertyRef Name="InformationSourceID" />
+          </Key>
+          <Property Name="InformationSourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InformationSourceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_InformationSource" FromRole="InformationSource" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="ContractID" Type="Int32" Nullable="false" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethodID" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Payment_Client" FromRole="Payment" ToRole="Client" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Payment_Contract" FromRole="Payment" ToRole="Contract" />
+          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK_Payment_PaymentMethod" FromRole="Payment" ToRole="PaymentMethod" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentMethodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payment" Relationship="Self.FK_Payment_PaymentMethod" FromRole="PaymentMethod" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PriceQuantity" Type="Int32" />
+          <Property Name="PricePerLesson" Type="Boolean" />
+          <Property Name="DatePrice" Type="DateTime" Precision="0" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="TypeLessonID" Type="Int32" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_Price" FromRole="Price" ToRole="Contract" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Price_Course" FromRole="Price" ToRole="Course" />
+          <NavigationProperty Name="TypeLesson" Relationship="Self.FK_Price_TypeLesson" FromRole="Price" ToRole="TypeLesson" />
+        </EntityType>
+        <EntityType Name="Requisite">
+          <Key>
+            <PropertyRef Name="RequisiteID" />
+          </Key>
+          <Property Name="RequisiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="INN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KPP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OGRN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BIK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CorrespondentAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NameOfDirector" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_Requisite" FromRole="Requisite" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="ClassDate" Type="DateTime" Precision="0" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="GroupID" Type="Int32" />
+          <Property Name="TimeID" Type="Int32" />
+          <Property Name="CabinetID" Type="Int32" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="TeacherID" Type="Int32" />
+          <NavigationProperty Name="Attendance" Relationship="Self.FK_Attendance_Schedule" FromRole="Schedule" ToRole="Attendance" />
+          <NavigationProperty Name="Cabinet" Relationship="Self.FK_Schedule_Cabinet" FromRole="Schedule" ToRole="Cabinet" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Schedule_Course" FromRole="Schedule" ToRole="Course" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Schedule_Employee" FromRole="Schedule" ToRole="Employee" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Schedule_Group" FromRole="Schedule" ToRole="Group" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Schedule_Student" FromRole="Schedule" ToRole="Student" />
+          <NavigationProperty Name="Time" Relationship="Self.FK_Schedule_Time" FromRole="Schedule" ToRole="Time" />
+        </EntityType>
+        <EntityType Name="StatusAttendance">
+          <Key>
+            <PropertyRef Name="StatusAttendanceID" />
+          </Key>
+          <Property Name="StatusAttendanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusAttendanceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attendance" Relationship="Self.FK_Attendance_StatusAttendance" FromRole="StatusAttendance" ToRole="Attendance" />
+        </EntityType>
+        <EntityType Name="StatusContract">
+          <Key>
+            <PropertyRef Name="StatusContractID" />
+          </Key>
+          <Property Name="StatusContractID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusContractName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_StatusContract" FromRole="StatusContract" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="StatusCourse">
+          <Key>
+            <PropertyRef Name="StatusCourseID" />
+          </Key>
+          <Property Name="StatusCourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusCourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Group_StatusCourse" FromRole="StatusCourse" ToRole="Group" />
+          <NavigationProperty Name="StudentCourse" Relationship="Self.FK_StudentCourse_StatusCourse" FromRole="StatusCourse" ToRole="StudentCourse" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Appraisal" Relationship="Self.FK_Appraisal_Student" FromRole="Student" ToRole="Appraisal" />
+          <NavigationProperty Name="Attendance" Relationship="Self.FK_Attendance_Student" FromRole="Student" ToRole="Attendance" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Student_Client" FromRole="Student" ToRole="Client" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_Student" FromRole="Student" ToRole="Contract" />
+          <NavigationProperty Name="GroupStudent" Relationship="Self.FK_GroupStudent_Student" FromRole="Student" ToRole="GroupStudent" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Student" FromRole="Student" ToRole="Schedule" />
+          <NavigationProperty Name="StudentCourse" Relationship="Self.FK_StudentCourse_Student" FromRole="Student" ToRole="StudentCourse" />
+          <NavigationProperty Name="TeacherTask" Relationship="Self.FK_TeacherTask_Student" FromRole="Student" ToRole="TeacherTask" />
+        </EntityType>
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="StudentCourseID" />
+          </Key>
+          <Property Name="StudentCourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="StatusCourseID" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_StudentCourse_Course" FromRole="StudentCourse" ToRole="Course" />
+          <NavigationProperty Name="StatusCourse" Relationship="Self.FK_StudentCourse_StatusCourse" FromRole="StudentCourse" ToRole="StatusCourse" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_StudentCourse_Student" FromRole="StudentCourse" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TeacherCourse">
+          <Key>
+            <PropertyRef Name="TeacherCourseID" />
+          </Key>
+          <Property Name="TeacherCourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherID" Type="Int32" />
+          <Property Name="CourseID" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_TeacherCourse_Course" FromRole="TeacherCourse" ToRole="Course" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_TeacherCourse_Employee" FromRole="TeacherCourse" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="TeacherTask">
+          <Key>
+            <PropertyRef Name="TeacherTaskID" />
+          </Key>
+          <Property Name="TeacherTaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Task" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DataTask" Type="DateTime" Precision="0" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="TeacherID" Type="Int32" />
+          <Property Name="StatusTask" Type="Boolean" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_TeacherTask_Employee" FromRole="TeacherTask" ToRole="Employee" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_TeacherTask_Student" FromRole="TeacherTask" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Time">
+          <Key>
+            <PropertyRef Name="TimeID" />
+          </Key>
+          <Property Name="TimeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeStart" Type="Time" Precision="7" />
+          <Property Name="TimeEnd" Type="Time" Precision="7" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Time" FromRole="Time" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="TypeCourse">
+          <Key>
+            <PropertyRef Name="TypeCourseID" />
+          </Key>
+          <Property Name="TypeCourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeCourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Course_TypeCourse" FromRole="TypeCourse" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="TypeLesson">
+          <Key>
+            <PropertyRef Name="TypeLessonID" />
+          </Key>
+          <Property Name="TypeLessonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeLessonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Price" Relationship="Self.FK_Price_TypeLesson" FromRole="TypeLesson" ToRole="Price" />
+        </EntityType>
+        <Association Name="FK_Appraisal_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Appraisal">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appraisal_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Appraisal">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appraisal_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Appraisal">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Schedule">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="ScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_StatusAttendance">
+          <End Role="StatusAttendance" Type="Self.StatusAttendance" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAttendance">
+              <PropertyRef Name="StatusAttendanceID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="StatusAttendanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Cabinet">
+          <End Role="Cabinet" Type="Self.Cabinet" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cabinet">
+              <PropertyRef Name="CabinetID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CabinetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_InformationSource">
+          <End Role="InformationSource" Type="Self.InformationSource" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InformationSource">
+              <PropertyRef Name="InformationSourceID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="InformationSourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscountStudent_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="DiscountStudent" Type="Self.DiscountStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="DiscountStudent">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_FormOfStudy">
+          <End Role="FormOfStudy" Type="Self.FormOfStudy" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormOfStudy">
+              <PropertyRef Name="FormOfStudyID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="FormOfStudyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Price">
+          <End Role="Price" Type="Self.Price" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price">
+              <PropertyRef Name="PriceID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="PriceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Requisite">
+          <End Role="Requisite" Type="Self.Requisite" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisite">
+              <PropertyRef Name="RequisiteID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="RequisiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_StatusContract">
+          <End Role="StatusContract" Type="Self.StatusContract" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusContract">
+              <PropertyRef Name="StatusContractID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="StatusContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiplomaOrCertificate_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
+          <End Role="DiplomaOrCertificate" Type="Self.DiplomaOrCertificate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ContractID" />
+            </Principal>
+            <Dependent Role="DiplomaOrCertificate">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ContractID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_TypeCourse">
+          <End Role="TypeCourse" Type="Self.TypeCourse" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeCourse">
+              <PropertyRef Name="TypeCourseID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="TypeCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscountStudent_Discount">
+          <End Role="Discount" Type="Self.Discount" Multiplicity="1" />
+          <End Role="DiscountStudent" Type="Self.DiscountStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="DiscountStudent">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmployeeRole">
+          <End Role="EmployeeRole" Type="Self.EmployeeRole" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRole">
+              <PropertyRef Name="EmployeeRoleID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmployeeRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherTask_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="TeacherTask" Type="Self.TeacherTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="TeacherTask">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_StatusCourse">
+          <End Role="StatusCourse" Type="Self.StatusCourse" Multiplicity="0..1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusCourse">
+              <PropertyRef Name="StatusCourseID" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="StatusCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupStudent_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="GroupStudent" Type="Self.GroupStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="GroupStudent">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupStudent_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="GroupStudent" Type="Self.GroupStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="GroupStudent">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentMethod">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_TypeLesson">
+          <End Role="TypeLesson" Type="Self.TypeLesson" Multiplicity="0..1" />
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeLesson">
+              <PropertyRef Name="TypeLessonID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="TypeLessonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Time">
+          <End Role="Time" Type="Self.Time" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Time">
+              <PropertyRef Name="TimeID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="TimeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_StatusCourse">
+          <End Role="StatusCourse" Type="Self.StatusCourse" Multiplicity="0..1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusCourse">
+              <PropertyRef Name="StatusCourseID" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="StatusCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherTask_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="TeacherTask" Type="Self.TeacherTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="TeacherTask">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Dimploma1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appraisal" EntityType="Self.Appraisal" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" />
+          <EntitySet Name="Cabinet" EntityType="Self.Cabinet" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" />
+          <EntitySet Name="Course" EntityType="Self.Course" />
+          <EntitySet Name="DiplomaOrCertificate" EntityType="Self.DiplomaOrCertificate" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" />
+          <EntitySet Name="DiscountStudent" EntityType="Self.DiscountStudent" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" />
+          <EntitySet Name="FormOfStudy" EntityType="Self.FormOfStudy" />
+          <EntitySet Name="Group" EntityType="Self.Group" />
+          <EntitySet Name="GroupStudent" EntityType="Self.GroupStudent" />
+          <EntitySet Name="InformationSource" EntityType="Self.InformationSource" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" />
+          <EntitySet Name="Price" EntityType="Self.Price" />
+          <EntitySet Name="Requisite" EntityType="Self.Requisite" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" />
+          <EntitySet Name="StatusAttendance" EntityType="Self.StatusAttendance" />
+          <EntitySet Name="StatusContract" EntityType="Self.StatusContract" />
+          <EntitySet Name="StatusCourse" EntityType="Self.StatusCourse" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TeacherCourse" EntityType="Self.TeacherCourse" />
+          <EntitySet Name="TeacherTask" EntityType="Self.TeacherTask" />
+          <EntitySet Name="Time" EntityType="Self.Time" />
+          <EntitySet Name="TypeCourse" EntityType="Self.TypeCourse" />
+          <EntitySet Name="TypeLesson" EntityType="Self.TypeLesson" />
+          <AssociationSet Name="FK_Appraisal_Course" Association="Self.FK_Appraisal_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Appraisal" EntitySet="Appraisal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appraisal_Employee" Association="Self.FK_Appraisal_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Appraisal" EntitySet="Appraisal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appraisal_Student" Association="Self.FK_Appraisal_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Appraisal" EntitySet="Appraisal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Schedule" Association="Self.FK_Attendance_Schedule">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_StatusAttendance" Association="Self.FK_Attendance_StatusAttendance">
+            <End Role="StatusAttendance" EntitySet="StatusAttendance" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Student" Association="Self.FK_Attendance_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Cabinet" Association="Self.FK_Schedule_Cabinet">
+            <End Role="Cabinet" EntitySet="Cabinet" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_InformationSource" Association="Self.FK_Client_InformationSource">
+            <End Role="InformationSource" EntitySet="InformationSource" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Client" Association="Self.FK_Contract_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscountStudent_Client" Association="Self.FK_DiscountStudent_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="DiscountStudent" EntitySet="DiscountStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Client" Association="Self.FK_Payment_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Client" Association="Self.FK_Student_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_FormOfStudy" Association="Self.FK_Contract_FormOfStudy">
+            <End Role="FormOfStudy" EntitySet="FormOfStudy" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Price" Association="Self.FK_Contract_Price">
+            <End Role="Price" EntitySet="Price" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Requisite" Association="Self.FK_Contract_Requisite">
+            <End Role="Requisite" EntitySet="Requisite" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_StatusContract" Association="Self.FK_Contract_StatusContract">
+            <End Role="StatusContract" EntitySet="StatusContract" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Student" Association="Self.FK_Contract_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiplomaOrCertificate_Contract" Association="Self.FK_DiplomaOrCertificate_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="DiplomaOrCertificate" EntitySet="DiplomaOrCertificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Contract" Association="Self.FK_Payment_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_TypeCourse" Association="Self.FK_Course_TypeCourse">
+            <End Role="TypeCourse" EntitySet="TypeCourse" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_Course" Association="Self.FK_Group_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_Course" Association="Self.FK_Price_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Course" Association="Self.FK_Schedule_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_Course" Association="Self.FK_StudentCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Course" Association="Self.FK_TeacherCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscountStudent_Discount" Association="Self.FK_DiscountStudent_Discount">
+            <End Role="Discount" EntitySet="Discount" />
+            <End Role="DiscountStudent" EntitySet="DiscountStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmployeeRole" Association="Self.FK_Employee_EmployeeRole">
+            <End Role="EmployeeRole" EntitySet="EmployeeRole" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Employee" Association="Self.FK_Schedule_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Employee" Association="Self.FK_TeacherCourse_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherTask_Employee" Association="Self.FK_TeacherTask_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TeacherTask" EntitySet="TeacherTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_StatusCourse" Association="Self.FK_Group_StatusCourse">
+            <End Role="StatusCourse" EntitySet="StatusCourse" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupStudent_Group" Association="Self.FK_GroupStudent_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="GroupStudent" EntitySet="GroupStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Group" Association="Self.FK_Schedule_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupStudent_Student" Association="Self.FK_GroupStudent_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="GroupStudent" EntitySet="GroupStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentMethod" Association="Self.FK_Payment_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_TypeLesson" Association="Self.FK_Price_TypeLesson">
+            <End Role="TypeLesson" EntitySet="TypeLesson" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Student" Association="Self.FK_Schedule_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Time" Association="Self.FK_Schedule_Time">
+            <End Role="Time" EntitySet="Time" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_StatusCourse" Association="Self.FK_StudentCourse_StatusCourse">
+            <End Role="StatusCourse" EntitySet="StatusCourse" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_Student" Association="Self.FK_StudentCourse_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherTask_Student" Association="Self.FK_TeacherTask_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="TeacherTask" EntitySet="TeacherTask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Dimploma1ModelContainer" CdmEntityContainer="Dimploma1Entities">
+          <EntitySetMapping Name="Appraisal">
+            <EntityTypeMapping TypeName="Dimploma1Model.Appraisal">
+              <MappingFragment StoreEntitySet="Appraisal">
+                <ScalarProperty Name="AppraisalID" ColumnName="AppraisalID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Appraisal1" ColumnName="Appraisal" />
+                <ScalarProperty Name="Cooment" ColumnName="Cooment" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="DateAssessment" ColumnName="DateAssessment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendance">
+            <EntityTypeMapping TypeName="Dimploma1Model.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="AttendanceID" ColumnName="AttendanceID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="StatusAttendanceID" ColumnName="StatusAttendanceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cabinet">
+            <EntityTypeMapping TypeName="Dimploma1Model.Cabinet">
+              <MappingFragment StoreEntitySet="Cabinet">
+                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+                <ScalarProperty Name="CabinetName" ColumnName="CabinetName" />
+                <ScalarProperty Name="Interchangeability" ColumnName="Interchangeability" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="Dimploma1Model.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PassporSeries" ColumnName="PassporSeries" />
+                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+                <ScalarProperty Name="SNILS" ColumnName="SNILS" />
+                <ScalarProperty Name="IssuedBy" ColumnName="IssuedBy" />
+                <ScalarProperty Name="WhenIssued" ColumnName="WhenIssued" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="InformationSourceID" ColumnName="InformationSourceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract">
+            <EntityTypeMapping TypeName="Dimploma1Model.Contract">
+              <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+                <ScalarProperty Name="RequisiteID" ColumnName="RequisiteID" />
+                <ScalarProperty Name="FormOfStudyID" ColumnName="FormOfStudyID" />
+                <ScalarProperty Name="StatusContractID" ColumnName="StatusContractID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Course">
+            <EntityTypeMapping TypeName="Dimploma1Model.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="QuantityHours" ColumnName="QuantityHours" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MaxNumOfStudentPerGroup" ColumnName="MaxNumOfStudentPerGroup" />
+                <ScalarProperty Name="IsActiveCourse" ColumnName="IsActiveCourse" />
+                <ScalarProperty Name="MinAge" ColumnName="MinAge" />
+                <ScalarProperty Name="MaxAge" ColumnName="MaxAge" />
+                <ScalarProperty Name="TypeCourseID" ColumnName="TypeCourseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiplomaOrCertificate">
+            <EntityTypeMapping TypeName="Dimploma1Model.DiplomaOrCertificate">
+              <MappingFragment StoreEntitySet="DiplomaOrCertificate">
+                <ScalarProperty Name="DiplomaOrCertificateID" ColumnName="DiplomaOrCertificateID" />
+                <ScalarProperty Name="SeriesDiploma" ColumnName="SeriesDiploma" />
+                <ScalarProperty Name="NumberDiploma" ColumnName="NumberDiploma" />
+                <ScalarProperty Name="NumberCertificate" ColumnName="NumberCertificate" />
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discount">
+            <EntityTypeMapping TypeName="Dimploma1Model.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+                <ScalarProperty Name="DiscountName" ColumnName="DiscountName" />
+                <ScalarProperty Name="IsActiveDiscount" ColumnName="IsActiveDiscount" />
+                <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
+                <ScalarProperty Name="DateCreation" ColumnName="DateCreation" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountStudent">
+            <EntityTypeMapping TypeName="Dimploma1Model.DiscountStudent">
+              <MappingFragment StoreEntitySet="DiscountStudent">
+                <ScalarProperty Name="DiscountStudentID" ColumnName="DiscountStudentID" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="DateOfDiscountApplication" ColumnName="DateOfDiscountApplication" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="Dimploma1Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EmployeeRoleID" ColumnName="EmployeeRoleID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeRole">
+            <EntityTypeMapping TypeName="Dimploma1Model.EmployeeRole">
+              <MappingFragment StoreEntitySet="EmployeeRole">
+                <ScalarProperty Name="EmployeeRoleID" ColumnName="EmployeeRoleID" />
+                <ScalarProperty Name="EmployeeRoleName" ColumnName="EmployeeRoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormOfStudy">
+            <EntityTypeMapping TypeName="Dimploma1Model.FormOfStudy">
+              <MappingFragment StoreEntitySet="FormOfStudy">
+                <ScalarProperty Name="FormOfStudyID" ColumnName="FormOfStudyID" />
+                <ScalarProperty Name="FormOfStudyName" ColumnName="FormOfStudyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Group">
+            <EntityTypeMapping TypeName="Dimploma1Model.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="StatusCourseID" ColumnName="StatusCourseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupStudent">
+            <EntityTypeMapping TypeName="Dimploma1Model.GroupStudent">
+              <MappingFragment StoreEntitySet="GroupStudent">
+                <ScalarProperty Name="GroupStudentID" ColumnName="GroupStudentID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformationSource">
+            <EntityTypeMapping TypeName="Dimploma1Model.InformationSource">
+              <MappingFragment StoreEntitySet="InformationSource">
+                <ScalarProperty Name="InformationSourceID" ColumnName="InformationSourceID" />
+                <ScalarProperty Name="InformationSourceName" ColumnName="InformationSourceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="Dimploma1Model.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethod">
+            <EntityTypeMapping TypeName="Dimploma1Model.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="PaymentMethodName" ColumnName="PaymentMethodName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price">
+            <EntityTypeMapping TypeName="Dimploma1Model.Price">
+              <MappingFragment StoreEntitySet="Price">
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+                <ScalarProperty Name="PriceQuantity" ColumnName="PriceQuantity" />
+                <ScalarProperty Name="PricePerLesson" ColumnName="PricePerLesson" />
+                <ScalarProperty Name="DatePrice" ColumnName="DatePrice" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="TypeLessonID" ColumnName="TypeLessonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requisite">
+            <EntityTypeMapping TypeName="Dimploma1Model.Requisite">
+              <MappingFragment StoreEntitySet="Requisite">
+                <ScalarProperty Name="RequisiteID" ColumnName="RequisiteID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="KPP" ColumnName="KPP" />
+                <ScalarProperty Name="OGRN" ColumnName="OGRN" />
+                <ScalarProperty Name="BIK" ColumnName="BIK" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="CorrespondentAccount" ColumnName="CorrespondentAccount" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="NameOfDirector" ColumnName="NameOfDirector" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedule">
+            <EntityTypeMapping TypeName="Dimploma1Model.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="ClassDate" ColumnName="ClassDate" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="TimeID" ColumnName="TimeID" />
+                <ScalarProperty Name="CabinetID" ColumnName="CabinetID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusAttendance">
+            <EntityTypeMapping TypeName="Dimploma1Model.StatusAttendance">
+              <MappingFragment StoreEntitySet="StatusAttendance">
+                <ScalarProperty Name="StatusAttendanceID" ColumnName="StatusAttendanceID" />
+                <ScalarProperty Name="StatusAttendanceName" ColumnName="StatusAttendanceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusContract">
+            <EntityTypeMapping TypeName="Dimploma1Model.StatusContract">
+              <MappingFragment StoreEntitySet="StatusContract">
+                <ScalarProperty Name="StatusContractID" ColumnName="StatusContractID" />
+                <ScalarProperty Name="StatusContractName" ColumnName="StatusContractName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusCourse">
+            <EntityTypeMapping TypeName="Dimploma1Model.StatusCourse">
+              <MappingFragment StoreEntitySet="StatusCourse">
+                <ScalarProperty Name="StatusCourseID" ColumnName="StatusCourseID" />
+                <ScalarProperty Name="StatusCourseName" ColumnName="StatusCourseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="Dimploma1Model.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCourse">
+            <EntityTypeMapping TypeName="Dimploma1Model.StudentCourse">
+              <MappingFragment StoreEntitySet="StudentCourse">
+                <ScalarProperty Name="StudentCourseID" ColumnName="StudentCourseID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="StatusCourseID" ColumnName="StatusCourseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Dimploma1Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherCourse">
+            <EntityTypeMapping TypeName="Dimploma1Model.TeacherCourse">
+              <MappingFragment StoreEntitySet="TeacherCourse">
+                <ScalarProperty Name="TeacherCourseID" ColumnName="TeacherCourseID" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherTask">
+            <EntityTypeMapping TypeName="Dimploma1Model.TeacherTask">
+              <MappingFragment StoreEntitySet="TeacherTask">
+                <ScalarProperty Name="TeacherTaskID" ColumnName="TeacherTaskID" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="DataTask" ColumnName="DataTask" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="StatusTask" ColumnName="StatusTask" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Time">
+            <EntityTypeMapping TypeName="Dimploma1Model.Time">
+              <MappingFragment StoreEntitySet="Time">
+                <ScalarProperty Name="TimeID" ColumnName="TimeID" />
+                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeCourse">
+            <EntityTypeMapping TypeName="Dimploma1Model.TypeCourse">
+              <MappingFragment StoreEntitySet="TypeCourse">
+                <ScalarProperty Name="TypeCourseID" ColumnName="TypeCourseID" />
+                <ScalarProperty Name="TypeCourseName" ColumnName="TypeCourseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeLesson">
+            <EntityTypeMapping TypeName="Dimploma1Model.TypeLesson">
+              <MappingFragment StoreEntitySet="TypeLesson">
+                <ScalarProperty Name="TypeLessonID" ColumnName="TypeLessonID" />
+                <ScalarProperty Name="TypeLessonName" ColumnName="TypeLessonName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
