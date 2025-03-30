@@ -291,10 +291,11 @@
           </Key>
           <Property Name="TeacherTaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Task" Type="text" />
-          <Property Name="DataTask" Type="date" />
+          <Property Name="DataCreate" Type="date" />
           <Property Name="StudentID" Type="int" />
           <Property Name="TeacherID" Type="int" />
           <Property Name="StatusTask" Type="bit" />
+          <Property Name="DataTask" Type="date" />
         </EntityType>
         <EntityType Name="Time">
           <Key>
@@ -1375,10 +1376,11 @@
           </Key>
           <Property Name="TeacherTaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Task" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DataTask" Type="DateTime" Precision="0" />
+          <Property Name="DataCreate" Type="DateTime" Precision="0" />
           <Property Name="StudentID" Type="Int32" />
           <Property Name="TeacherID" Type="Int32" />
           <Property Name="StatusTask" Type="Boolean" />
+          <Property Name="DataTask" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_TeacherTask_Employee" FromRole="TeacherTask" ToRole="Employee" />
           <NavigationProperty Name="Student" Relationship="Self.FK_TeacherTask_Student" FromRole="TeacherTask" ToRole="Student" />
         </EntityType>
@@ -2414,10 +2416,11 @@
               <MappingFragment StoreEntitySet="TeacherTask">
                 <ScalarProperty Name="TeacherTaskID" ColumnName="TeacherTaskID" />
                 <ScalarProperty Name="Task" ColumnName="Task" />
-                <ScalarProperty Name="DataTask" ColumnName="DataTask" />
+                <ScalarProperty Name="DataCreate" ColumnName="DataCreate" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
                 <ScalarProperty Name="StatusTask" ColumnName="StatusTask" />
+                <ScalarProperty Name="DataTask" ColumnName="DataTask" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

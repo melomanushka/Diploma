@@ -16,10 +16,11 @@ namespace Diploma1._1
     {
         public int TeacherTaskID { get; set; }
         public string Task { get; set; }
-        public Nullable<System.DateTime> DataTask { get; set; }
+        public Nullable<System.DateTime> DataCreate { get; set; }
         public Nullable<int> StudentID { get; set; }
         public Nullable<int> TeacherID { get; set; }
         public Nullable<bool> StatusTask { get; set; }
+        public Nullable<System.DateTime> DataTask { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Student Student { get; set; }

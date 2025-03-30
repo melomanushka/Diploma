@@ -24,6 +24,7 @@ namespace Diploma1._1
             }
             return _context;
         }
+
         public Dimploma1Entities()
             : base("name=Dimploma1Entities")
         {

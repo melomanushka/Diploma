@@ -28,7 +28,7 @@ namespace Diploma1._1.View.CRUD
                     currentTask = context.TeacherTask.Find(taskId);
                     if (currentTask != null)
                     {
-                        CreationDatePicker.SelectedDate = currentTask.DataTask;
+                        CreationDatePicker.SelectedDate = currentTask.DataCreate;
                         DueDatePicker.SelectedDate = currentTask.DataTask;
                         TaskTextBox.Text = currentTask.Task;
                         StatusCheckBox.IsChecked = currentTask.StatusTask;
@@ -46,6 +46,7 @@ namespace Diploma1._1.View.CRUD
             {
                 currentTask = new TeacherTask
                 {
+                    DataCreate = DateTime.Now,
                     DataTask = DateTime.Now,
                     TeacherID = teacherId,
                     StatusTask = false
@@ -128,6 +129,7 @@ namespace Diploma1._1.View.CRUD
                         var existingTask = context.TeacherTask.Find(currentTask.TeacherTaskID);
                         if (existingTask != null)
                         {
+                            existingTask.DataCreate = currentTask.DataCreate;
                             existingTask.DataTask = currentTask.DataTask;
                             existingTask.Task = currentTask.Task;
                             existingTask.StudentID = currentTask.StudentID;
@@ -162,6 +164,12 @@ namespace Diploma1._1.View.CRUD
                 return false;
             }
 
+            if (DueDatePicker.SelectedDate.Value < CreationDatePicker.SelectedDate.Value)
+            {
+                MessageBox.Show("Дата выполнения не может быть раньше даты создания", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(TaskTextBox.Text))
             {
                 MessageBox.Show("Пожалуйста, введите текст задачи", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -174,6 +182,7 @@ namespace Diploma1._1.View.CRUD
                 return false;
             }
 
+            currentTask.DataCreate = CreationDatePicker.SelectedDate.Value;
             currentTask.DataTask = DueDatePicker.SelectedDate.Value;
             currentTask.Task = TaskTextBox.Text;
             currentTask.StatusTask = StatusCheckBox.IsChecked ?? false;

@@ -20,98 +20,133 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок окна -->
-        <Grid Grid.Row="0" Background="#4682B4" MouseDown="Window_MouseDown">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock Text="Редактирование расписания" 
-                       Foreground="White" 
-                       FontSize="16" 
+        <!-- Заголовок -->
+        <Border Background="#F5F9FC" BorderBrush="#DCE7F0" BorderThickness="0,0,0,1" MouseDown="Window_MouseDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Редактирование расписания" 
+                       FontSize="18" 
                        FontWeight="Bold" 
-                       Margin="10,5,0,5"/>
-            
-            <Button Grid.Column="1" 
+                       Margin="15,10"
+                       Foreground="#2C3E50"/>
+
+                <Button Grid.Column="1" 
                     Content="✕" 
                     Click="CancelButton_Click"
                     Background="Transparent"
                     BorderThickness="0"
-                    Foreground="White"
+                    Foreground="#2C3E50"
                     FontSize="16"
-                    Padding="10,5"/>
-        </Grid>
+                    Padding="15,5"
+                    Height="40"/>
+            </Grid>
+        </Border>
 
-        <!-- Основное содержимое -->
-        <ScrollViewer Grid.Row="1" Margin="20">
+        <!-- Основная область -->
+        <ScrollViewer Grid.Row="1" Margin="15">
             <StackPanel>
                 <!-- Дата -->
-                <TextBlock Text="Дата:" Margin="0,0,0,5"/>
-                <DatePicker x:Name="dpDate" Margin="0,0,0,15"/>
+                <TextBlock Text="Дата:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                <DatePicker x:Name="DatePicker" 
+                            Margin="0,0,0,15"
+                            Height="30"/>
 
                 <!-- Время -->
-                <TextBlock Text="Время:" Margin="0,0,0,5"/>
-                <ComboBox x:Name="cmbxTime" Margin="0,0,0,15"/>
+                <TextBlock Text="Время:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                <ComboBox x:Name="TimeComboBox" 
+                          Margin="0,0,0,15"
+                          Height="30"/>
 
                 <!-- Курс -->
-                <TextBlock Text="Курс:" Margin="0,0,0,5"/>
-                <ComboBox x:Name="cmbxCourse" Margin="0,0,0,15"/>
+                <TextBlock Text="Курс:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                <ComboBox x:Name="CourseComboBox" 
+                          Margin="0,0,0,15"
+                          Height="30"/>
 
-                <!-- Выбор типа (Обучающийся/Группа) -->
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <RadioButton x:Name="rbStudent" Content="Обучающийся" 
-                               IsChecked="True" Margin="0,0,20,0" 
-                               Checked="RadioButton_Checked"/>
-                    <RadioButton x:Name="rbGroup" Content="Группа" 
-                               Checked="RadioButton_Checked"/>
+                <!-- Тип -->
+                <TextBlock Text="Тип:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                    
+                    <RadioButton x:Name="StudentRadioButton" 
+                                Content="Обучающийся" 
+                                Margin="0,0,20,0"
+                                Checked="RadioButton_Checked"/>
+                    
+                    <RadioButton x:Name="GroupRadioButton" 
+                                Content="Группа" 
+                                IsChecked="True"
+                                Checked="RadioButton_Checked"/>
                 </StackPanel>
 
-                <!-- Студент -->
-                <StackPanel x:Name="spStudent" Visibility="Visible">
-                    <TextBlock Text="Обучающийся:" Margin="0,0,0,5"/>
-                    <ComboBox x:Name="cmbxStudent" Margin="0,0,0,15"/>
-                </StackPanel>
+                <Grid>
+                    <!-- Ученик -->
+                    <StackPanel x:Name="spStudent" Visibility="Collapsed">
+                        <TextBlock Text="Ученик:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                        <ComboBox x:Name="StudentComboBox" 
+                          Margin="0,0,0,15"
+                          Height="30"/>
 
-                <!-- Группа -->
-                <StackPanel x:Name="spGroup" Visibility="Collapsed">
-                    <TextBlock Text="Группа:" Margin="0,0,0,5"/>
-                    <ComboBox x:Name="cmbxGroup" Margin="0,0,0,15"/>
-                </StackPanel>
+                    </StackPanel>
 
+                    <StackPanel x:Name="spGroup" Visibility="Visible">
+                        <!-- Группа -->
+                        <TextBlock Text="Группа:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                        <ComboBox x:Name="GroupComboBox" 
+                          Margin="0,0,0,15"
+                          Height="30"/>
+                    </StackPanel>
+                </Grid>
+                
                 <!-- Кабинет -->
-                <TextBlock Text="Кабинет:" Margin="0,0,0,5"/>
-                <ComboBox x:Name="cmbxCabinet" Margin="0,0,0,15"/>
+                <TextBlock Text="Кабинет:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                <ComboBox x:Name="CabinetComboBox" 
+                          Margin="0,0,0,15"
+                          Height="30"/>
 
                 <!-- Преподаватель -->
-                <TextBlock Text="Преподаватель:" Margin="0,0,0,5"/>
-                <ComboBox x:Name="cmbxTeacher" Margin="0,0,0,15"/>
+                <TextBlock Text="Преподаватель:" 
+                           Margin="0,0,0,5"
+                           Foreground="#2C3E50"/>
+                <ComboBox x:Name="TeacherComboBox" 
+                          Margin="0,0,0,15"
+                          Height="30"/>
             </StackPanel>
         </ScrollViewer>
 
         <!-- Кнопки -->
-        <Grid Grid.Row="2" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="2" Background="#F5F9FC" BorderBrush="#DCE7F0" BorderThickness="0,1,0,0" Padding="15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1" 
+                <Button Grid.Column="1" 
                     Content="Сохранить" 
                     Click="SaveButton_Click"
                     Background="#4682B4"
                     Foreground="White"
                     Padding="20,5"
-                    Margin="0,0,10,0"/>
-
-            <Button x:Name="DeleteButton"
-                    Grid.Column="2" 
-                    Content="Удалить" 
-                    Click="DeleteButton_Click"
-                    Background="#FF4444"
-                    Foreground="White"
-                    Padding="20,5"/>
-        </Grid>
+                    Height="35"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

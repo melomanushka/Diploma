@@ -254,7 +254,10 @@ namespace Diploma1._1.View.Pages
             if (sender is Border border && border.Tag is ScheduleItem item)
             {
                 // Открываем окно редактирования с данными выбранного элемента
-                new EditScheduleItem(item);
+                var editWindow = new EditScheduleItem(item.ScheduleID);
+                editWindow.ShowDialog();
+                LoadScheduleData();
+                UpdateCalendarView();
             }
         }
 
@@ -494,15 +497,8 @@ namespace Diploma1._1.View.Pages
         // Добавление нового занятия
         private void AddScheduleButton_Click(object sender, RoutedEventArgs e)
         {
-            // Создаем новый элемент расписания с текущей датой
-            var newItem = new ScheduleItem
-            {
-                Date = DateTime.Today,
-                // Остальные поля будут заполнены в диалоговом окне
-            };
-
-            // Открываем окно для заполнения данных
-            var editWindow = new EditScheduleItem(newItem);
+            // Открываем окно для добавления нового расписания
+            var editWindow = new EditScheduleItem();
             editWindow.ShowDialog();
             LoadScheduleData();
             UpdateCalendarView();
@@ -521,7 +517,7 @@ namespace Diploma1._1.View.Pages
 
             // Добавляем обработчик клика для редактирования
             border.MouseLeftButtonDown += (sender, e) => {
-                var editWindow = new EditScheduleItem(item);
+                var editWindow = new EditScheduleItem(item.ScheduleID);
                 editWindow.ShowDialog();
                 LoadScheduleData();
                 UpdateCalendarView();
