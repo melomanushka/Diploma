@@ -1,4 +1,5 @@
 ﻿using Diploma1._1.Model;
+using Diploma1._1.View.CRUD;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -75,6 +76,25 @@ namespace Diploma1._1.View.Pages
                 TeacherComboBox.ItemsSource = usersTeacher;
                 TeacherComboBox.DisplayMemberPath = "FullName";
                 TeacherComboBox.SelectedValuePath = "UserID";
+
+                // Заполняем комбобоксы студентами
+                var studentsList = (from user in context.Student
+                                   select new UserFullName
+                                   {
+                                       UserID = user.StudentID,
+                                       FullName = user.LastName + " " + user.FirstName + " " + user.MiddleName
+                                   }).ToList();
+
+                var students = new ObservableCollection<UserFullName>(studentsList);
+                StudentComboBox.ItemsSource = students;
+                StudentComboBox.DisplayMemberPath = "FullName";
+                StudentComboBox.SelectedValuePath = "UserID";
+
+                // Заполняем комбобоксы группами
+                var groups = context.Group.ToList();
+                GroupComboBox.ItemsSource = groups;
+                GroupComboBox.DisplayMemberPath = "GroupName";
+                GroupComboBox.SelectedValuePath = "GroupID";
 
                 // Загружаем доступные временные слоты из базы данных
                 timesList = context.Time.Select(t => new TimeTable
@@ -228,12 +248,13 @@ namespace Diploma1._1.View.Pages
             }
         }
 
+
         private void ScheduleItem_Click(object sender, MouseButtonEventArgs e)
         {
             if (sender is Border border && border.Tag is ScheduleItem item)
             {
                 // Открываем окно редактирования с данными выбранного элемента
-                EditScheduleItem(item);
+                new EditScheduleItem(item);
             }
         }
 
@@ -287,6 +308,30 @@ namespace Diploma1._1.View.Pages
                 filteredScheduleItems = filteredScheduleItems.Where(item => item.TeacherID == teacherId).ToList();
             }
 
+            // Применяем фильтр по студенту
+            if (StudentComboBox.SelectedValue != null)
+            {
+                int studentId = (int)StudentComboBox.SelectedValue;
+                using (var context = new Dimploma1Entities())
+                {
+                    var studentGroups = context.GroupStudent
+                        .Where(sg => sg.StudentID == studentId)
+                        .Select(sg => sg.GroupID)
+                        .ToList();
+
+                    filteredScheduleItems = filteredScheduleItems
+                        .Where(item => studentGroups.Contains(item.GroupID))
+                        .ToList();
+                }
+            }
+
+            // Применяем фильтр по группе
+            if (GroupComboBox.SelectedValue != null)
+            {
+                int groupId = (int)GroupComboBox.SelectedValue;
+                filteredScheduleItems = filteredScheduleItems.Where(item => item.GroupID == groupId).ToList();
+            }
+
             // Обновляем отображение
             UpdateCalendarView();
         }
@@ -299,6 +344,8 @@ namespace Diploma1._1.View.Pages
             CourseComboBox.SelectedValue = null;
             CabinetComboBox.SelectedValue = null;
             TeacherComboBox.SelectedValue = null;
+            StudentComboBox.SelectedValue = null;
+            GroupComboBox.SelectedValue = null;
 
             // Сбрасываем текущий месяц на текущий
             currentMonth = DateTime.Now;
@@ -455,7 +502,10 @@ namespace Diploma1._1.View.Pages
             };
 
             // Открываем окно для заполнения данных
-            EditScheduleItem(newItem);
+            var editWindow = new EditScheduleItem(newItem);
+            editWindow.ShowDialog();
+            LoadScheduleData();
+            UpdateCalendarView();
         }
 
         private UIElement CreateScheduleItemElement(ScheduleItem item)
@@ -466,348 +516,350 @@ namespace Diploma1._1.View.Pages
                 Style = (Style)FindResource("ScheduleItemStyle"),
                 Background = GetCourseColor(item.CourseID),
                 Tag = item, // Сохраняем данные элемента в Tag для последующего редактирования
-                Cursor = Cursors.Hand, // Указываем, что элемент можно кликнуть
-                Margin = new Thickness(2)
+                Cursor = Cursors.Hand // Указываем, что элемент можно кликнуть
             };
 
-            // Устанавливаем авторазмер
-            border.HorizontalAlignment = HorizontalAlignment.Stretch;
-            border.VerticalAlignment = VerticalAlignment.Stretch;
+            // Добавляем обработчик клика для редактирования
+            border.MouseLeftButtonDown += (sender, e) => {
+                var editWindow = new EditScheduleItem(item);
+                editWindow.ShowDialog();
+                LoadScheduleData();
+                UpdateCalendarView();
+            };
 
-            // Создаем содержимое с возможностью прокрутки, если контент не помещается
-            var scrollViewer = new ScrollViewer
+            // Создаем контейнер для содержимого
+            var stackPanel = new StackPanel
             {
-                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                Padding = new Thickness(3)
+                Margin = new Thickness(5)
             };
 
-            var content = new StackPanel { Margin = new Thickness(2) };
-
-            // Добавляем текстовые блоки с информацией о занятии
-            content.Children.Add(new TextBlock
+            // Добавляем название курса
+            var courseText = new TextBlock
             {
                 Text = item.CourseName,
                 FontWeight = FontWeights.Bold,
                 TextWrapping = TextWrapping.Wrap
-            });
+            };
+            stackPanel.Children.Add(courseText);
 
-            content.Children.Add(new TextBlock
+            // Добавляем название группы
+            var groupText = new TextBlock
             {
                 Text = $"Группа: {item.GroupName}",
-                TextWrapping = TextWrapping.Wrap,
-                Margin = new Thickness(0, 3, 0, 0)
-            });
-
-            content.Children.Add(new TextBlock
-            {
-                Text = $"Каб: {item.CabinetName}",
+                Margin = new Thickness(0, 5, 0, 0),
                 TextWrapping = TextWrapping.Wrap
-            });
+            };
+            stackPanel.Children.Add(groupText);
 
-            content.Children.Add(new TextBlock
+            // Добавляем кабинет
+            var cabinetText = new TextBlock
             {
-                Text = item.TeacherName,
-                TextWrapping = TextWrapping.Wrap,
-                FontStyle = FontStyles.Italic
-            });
+                Text = $"Кабинет: {item.CabinetName}",
+                Margin = new Thickness(0, 5, 0, 0),
+                TextWrapping = TextWrapping.Wrap
+            };
+            stackPanel.Children.Add(cabinetText);
 
-            // Устанавливаем содержимое в ScrollViewer
-            scrollViewer.Content = content;
+            // Добавляем преподавателя
+            var teacherText = new TextBlock
+            {
+                Text = $"Преподаватель: {item.TeacherName}",
+                Margin = new Thickness(0, 5, 0, 0),
+                TextWrapping = TextWrapping.Wrap
+            };
+            stackPanel.Children.Add(teacherText);
 
-            // Устанавливаем ScrollViewer в контейнер
-            border.Child = scrollViewer;
-
-            // Добавляем обработчик клика для редактирования
-            border.MouseLeftButtonDown += ScheduleItem_Click;
+            // Устанавливаем содержимое для border
+            border.Child = stackPanel;
 
             return border;
         }
-        private void EditScheduleItem(ScheduleItem item)
-        {
-            // Создаем диалоговое окно для редактирования
-            var editWindow = new Window
-            {
-                Title = item.ScheduleID == 0 ? "Добавление занятия" : "Редактирование занятия",
-                Width = 450,
-                Height = 600,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                ResizeMode = ResizeMode.NoResize
-            };
 
-            var grid = new Grid
-            {
-                Margin = new Thickness(15)
-            };
+        //private void EditScheduleItem(ScheduleItem item)
+        //{
+        //    // Создаем диалоговое окно для редактирования
+        //    var editWindow = new Window
+        //    {
+        //        Title = item.ScheduleID == 0 ? "Добавление занятия" : "Редактирование занятия",
+        //        Width = 450,
+        //        Height = 600,
+        //        WindowStartupLocation = WindowStartupLocation.CenterScreen,
+        //        ResizeMode = ResizeMode.NoResize
+        //    };
 
-            // Определяем строки в сетке
-            for (int i = 0; i < 16; i++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            }
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+        //    var grid = new Grid
+        //    {
+        //        Margin = new Thickness(15)
+        //    };
 
-            // Заголовок
-            var titleText = new TextBlock
-            {
-                Text = item.ScheduleID == 0 ? "Добавление занятия" : "Редактирование занятия",
-                FontSize = 18,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(0, 0, 0, 15)
-            };
-            Grid.SetRow(titleText, 0);
-            grid.Children.Add(titleText);
+        //    // Определяем строки в сетке
+        //    for (int i = 0; i < 16; i++)
+        //    {
+        //        grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        //    }
+        //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
-            // Дата
-            var dateLabel = new TextBlock { Text = "Дата:", Margin = new Thickness(0, 5, 0, 5) };
-            Grid.SetRow(dateLabel, 1);
-            grid.Children.Add(dateLabel);
+        //    // Заголовок
+        //    var titleText = new TextBlock
+        //    {
+        //        Text = item.ScheduleID == 0 ? "Добавление занятия" : "Редактирование занятия",
+        //        FontSize = 18,
+        //        FontWeight = FontWeights.Bold,
+        //        Margin = new Thickness(0, 0, 0, 15)
+        //    };
+        //    Grid.SetRow(titleText, 0);
+        //    grid.Children.Add(titleText);
 
-            var datePicker = new DatePicker { SelectedDate = item.Date, Margin = new Thickness(0, 0, 0, 10) };
-            Grid.SetRow(datePicker, 2);
-            grid.Children.Add(datePicker);
+        //    // Дата
+        //    var dateLabel = new TextBlock { Text = "Дата:", Margin = new Thickness(0, 5, 0, 5) };
+        //    Grid.SetRow(dateLabel, 1);
+        //    grid.Children.Add(dateLabel);
 
-            // Время
-            var timeLabel = new TextBlock { Text = "Время:", Margin = new Thickness(0, 5, 0, 5) };
-            Grid.SetRow(timeLabel, 3);
-            grid.Children.Add(timeLabel);
+        //    var datePicker = new DatePicker { SelectedDate = item.Date, Margin = new Thickness(0, 0, 0, 10) };
+        //    Grid.SetRow(datePicker, 2);
+        //    grid.Children.Add(datePicker);
 
-            var timeComboBox = new ComboBox
-            {
-                Margin = new Thickness(0, 0, 0, 10),
-                DisplayMemberPath = "DisplayText",
-                SelectedValuePath = "TimeID"
-            };
+        //    // Время
+        //    var timeLabel = new TextBlock { Text = "Время:", Margin = new Thickness(0, 5, 0, 5) };
+        //    Grid.SetRow(timeLabel, 3);
+        //    grid.Children.Add(timeLabel);
 
-            // Заполняем комбобокс временными слотами из базы
-            var timeItems = timesList.Select(t => new
-            {
-                TimeID = t.TimeID,
-                DisplayText = $"{t.TimeStart.Hours:D2}:{t.TimeStart.Minutes:D2} - {t.TimeEnd.Hours:D2}:{t.TimeEnd.Minutes:D2}"
-            }).ToList();
+        //    var timeComboBox = new ComboBox
+        //    {
+        //        Margin = new Thickness(0, 0, 0, 10),
+        //        DisplayMemberPath = "DisplayText",
+        //        SelectedValuePath = "TimeID"
+        //    };
 
-            timeComboBox.ItemsSource = timeItems;
+        // Заполняем комбобокс временными слотами из базы
+        //var timeItems = timesList.Select(t => new
+        //{
+        //    TimeID = t.TimeID,
+        //    DisplayText = $"{t.TimeStart.Hours:D2}:{t.TimeStart.Minutes:D2} - {t.TimeEnd.Hours:D2}:{t.TimeEnd.Minutes:D2}"
+        //}).ToList();
 
-            // Выбираем текущее время занятия
-            var currentTimeId = timesList.FirstOrDefault(t => t.TimeStart == item.StartTime)?.TimeID;
-            if (currentTimeId.HasValue)
-            {
-                timeComboBox.SelectedValue = currentTimeId.Value;
-            }
-            else if (timeItems.Any())
-            {
-                // Если это новое занятие, выбираем первый доступный слот
-                timeComboBox.SelectedIndex = 0;
-            }
+        //timeComboBox.ItemsSource = timeItems;
 
-            Grid.SetRow(timeComboBox, 4);
-            grid.Children.Add(timeComboBox);
+        //    // Выбираем текущее время занятия
+        //    var currentTimeId = timesList.FirstOrDefault(t => t.TimeStart == item.StartTime)?.TimeID;
+        //    if (currentTimeId.HasValue)
+        //    {
+        //        timeComboBox.SelectedValue = currentTimeId.Value;
+        //    }
+        //    else if (timeItems.Any())
+        //    {
+        //        // Если это новое занятие, выбираем первый доступный слот
+        //        timeComboBox.SelectedIndex = 0;
+        //    }
 
-            // Курс
-            var courseLabel = new TextBlock { Text = "Курс:", Margin = new Thickness(0, 5, 0, 5) };
-            Grid.SetRow(courseLabel, 5);
-            grid.Children.Add(courseLabel);
+        //    Grid.SetRow(timeComboBox, 4);
+        //    grid.Children.Add(timeComboBox);
 
-            var courseComboBox = new ComboBox
-            {
-                Margin = new Thickness(0, 0, 0, 10),
-                DisplayMemberPath = "CourseName",
-                SelectedValuePath = "CourseID"
-            };
+        //    // Курс
+        //    var courseLabel = new TextBlock { Text = "Курс:", Margin = new Thickness(0, 5, 0, 5) };
+        //    Grid.SetRow(courseLabel, 5);
+        //    grid.Children.Add(courseLabel);
 
-            // Группа
-            var groupLabel = new TextBlock { Text = "Группа:", Margin = new Thickness(0, 5, 0, 5) };
-            Grid.SetRow(groupLabel, 7);
-            grid.Children.Add(groupLabel);
+        //    var courseComboBox = new ComboBox
+        //    {
+        //        Margin = new Thickness(0, 0, 0, 10),
+        //        DisplayMemberPath = "CourseName",
+        //        SelectedValuePath = "CourseID"
+        //    };
 
-            var groupComboBox = new ComboBox
-            {
-                Margin = new Thickness(0, 0, 0, 10),
-                DisplayMemberPath = "GroupName",
-                SelectedValuePath = "GroupID"
-            };
+        //    // Группа
+        //    var groupLabel = new TextBlock { Text = "Группа:", Margin = new Thickness(0, 5, 0, 5) };
+        //    Grid.SetRow(groupLabel, 7);
+        //    grid.Children.Add(groupLabel);
 
-            // Кабинет
-            var cabinetLabel = new TextBlock { Text = "Кабинет:", Margin = new Thickness(0, 5, 0, 5) };
-            Grid.SetRow(cabinetLabel, 9);
-            grid.Children.Add(cabinetLabel);
+        //    var groupComboBox = new ComboBox
+        //    {
+        //        Margin = new Thickness(0, 0, 0, 10),
+        //        DisplayMemberPath = "GroupName",
+        //        SelectedValuePath = "GroupID"
+        //    };
 
-            var cabinetComboBox = new ComboBox
-            {
-                Margin = new Thickness(0, 0, 0, 10),
-                DisplayMemberPath = "CabinetName",
-                SelectedValuePath = "CabinetID"
-            };
+        //    // Кабинет
+        //    var cabinetLabel = new TextBlock { Text = "Кабинет:", Margin = new Thickness(0, 5, 0, 5) };
+        //    Grid.SetRow(cabinetLabel, 9);
+        //    grid.Children.Add(cabinetLabel);
 
-            // Преподаватель
-            var teacherLabel = new TextBlock { Text = "Преподаватель:", Margin = new Thickness(0, 5, 0, 5) };
-            Grid.SetRow(teacherLabel, 11);
-            grid.Children.Add(teacherLabel);
+        //    var cabinetComboBox = new ComboBox
+        //    {
+        //        Margin = new Thickness(0, 0, 0, 10),
+        //        DisplayMemberPath = "CabinetName",
+        //        SelectedValuePath = "CabinetID"
+        //    };
 
-            var teacherComboBox = new ComboBox
-            {
-                Margin = new Thickness(0, 0, 0, 10),
-                DisplayMemberPath = "FullName",
-                SelectedValuePath = "UserID"
-            };
+        //    // Преподаватель
+        //    var teacherLabel = new TextBlock { Text = "Преподаватель:", Margin = new Thickness(0, 5, 0, 5) };
+        //    Grid.SetRow(teacherLabel, 11);
+        //    grid.Children.Add(teacherLabel);
 
-            // Заполняем данные
-            using (var context = new Dimploma1Entities())
-            {
-                courseComboBox.ItemsSource = context.Course.ToList();
-                courseComboBox.SelectedValue = item.CourseID;
+        //    var teacherComboBox = new ComboBox
+        //    {
+        //        Margin = new Thickness(0, 0, 0, 10),
+        //        DisplayMemberPath = "FullName",
+        //        SelectedValuePath = "UserID"
+        //    };
 
-                groupComboBox.ItemsSource = context.Group.ToList();
-                groupComboBox.SelectedValue = item.GroupID;
+        //    // Заполняем данные
+        //    using (var context = new Dimploma1Entities())
+        //    {
+        //        courseComboBox.ItemsSource = context.Course.ToList();
+        //        courseComboBox.SelectedValue = item.CourseID;
 
-                cabinetComboBox.ItemsSource = context.Cabinet.ToList();
-                cabinetComboBox.SelectedValue = item.CabinetID;
+        //        groupComboBox.ItemsSource = context.Group.ToList();
+        //        groupComboBox.SelectedValue = item.GroupID;
 
-                // Преподаватели (сотрудники с ролью 2)
-                var usersListTeacher = (from user in context.Employee
-                                        where user.EmployeeRoleID == 2
-                                        select new UserFullName
-                                        {
-                                            UserID = user.EmployeeID,
-                                            StatusID = (int)user.EmployeeRoleID,
-                                            FullName = user.LastName + " " + user.FirstName + " " + user.MiddleName
-                                        }).ToList();
+        //        cabinetComboBox.ItemsSource = context.Cabinet.ToList();
+        //        cabinetComboBox.SelectedValue = item.CabinetID;
 
-                teacherComboBox.ItemsSource = usersListTeacher;
-                teacherComboBox.SelectedValue = item.TeacherID;
-            }
+        //        // Преподаватели (сотрудники с ролью 2)
+        //        var usersListTeacher = (from user in context.Employee
+        //                                where user.EmployeeRoleID == 2
+        //                                select new UserFullName
+        //                                {
+        //                                    UserID = user.EmployeeID,
+        //                                    StatusID = (int)user.EmployeeRoleID,
+        //                                    FullName = user.LastName + " " + user.FirstName + " " + user.MiddleName
+        //                                }).ToList();
 
-            Grid.SetRow(courseComboBox, 6);
-            grid.Children.Add(courseComboBox);
+        //        teacherComboBox.ItemsSource = usersListTeacher;
+        //        teacherComboBox.SelectedValue = item.TeacherID;
+        //    }
 
-            Grid.SetRow(groupComboBox, 8);
-            grid.Children.Add(groupComboBox);
+        //    Grid.SetRow(courseComboBox, 6);
+        //    grid.Children.Add(courseComboBox);
 
-            Grid.SetRow(cabinetComboBox, 10);
-            grid.Children.Add(cabinetComboBox);
+        //    Grid.SetRow(groupComboBox, 8);
+        //    grid.Children.Add(groupComboBox);
 
-            Grid.SetRow(teacherComboBox, 12);
-            grid.Children.Add(teacherComboBox);
+        //    Grid.SetRow(cabinetComboBox, 10);
+        //    grid.Children.Add(cabinetComboBox);
 
-            // Кнопки
-            var buttonPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Margin = new Thickness(0, 15, 0, 0)
-            };
+        //    Grid.SetRow(teacherComboBox, 12);
+        //    grid.Children.Add(teacherComboBox);
 
-            var saveButton = new Button
-            {
-                Content = "Сохранить",
-                Padding = new Thickness(15, 5, 15, 5),
-                Margin = new Thickness(0, 0, 10, 0)
-            };
+        //    // Кнопки
+        //    var buttonPanel = new StackPanel
+        //    {
+        //        Orientation = Orientation.Horizontal,
+        //        HorizontalAlignment = HorizontalAlignment.Right,
+        //        Margin = new Thickness(0, 15, 0, 0)
+        //    };
 
-            var cancelButton = new Button
-            {
-                Content = "Отмена",
-                Padding = new Thickness(15, 5, 15, 5)
-            };
+        //    var saveButton = new Button
+        //    {
+        //        Content = "Сохранить",
+        //        Padding = new Thickness(15, 5, 15, 5),
+        //        Margin = new Thickness(0, 0, 10, 0)
+        //    };
 
-            buttonPanel.Children.Add(saveButton);
-            buttonPanel.Children.Add(cancelButton);
+        //    var cancelButton = new Button
+        //    {
+        //        Content = "Отмена",
+        //        Padding = new Thickness(15, 5, 15, 5)
+        //    };
 
-            // Если это существующее занятие, добавляем кнопку удаления
-            if (item.ScheduleID != 0)
-            {
-                var deleteButton = new Button
-                {
-                    Content = "Удалить",
-                    Padding = new Thickness(15, 5, 15, 5),
-                    Margin = new Thickness(10, 0, 0, 0),
-                    Background = new SolidColorBrush(Colors.LightCoral)
-                };
+        //    buttonPanel.Children.Add(saveButton);
+        //    buttonPanel.Children.Add(cancelButton);
 
-                buttonPanel.Children.Add(deleteButton);
+        //    // Если это существующее занятие, добавляем кнопку удаления
+        //    if (item.ScheduleID != 0)
+        //    {
+        //        var deleteButton = new Button
+        //        {
+        //            Content = "Удалить",
+        //            Padding = new Thickness(15, 5, 15, 5),
+        //            Margin = new Thickness(10, 0, 0, 0),
+        //            Background = new SolidColorBrush(Colors.LightCoral)
+        //        };
 
-                // Обработчик для кнопки удаления
-                deleteButton.Click += (s, e) =>
-                {
-                    var result = MessageBox.Show("Вы уверены, что хотите удалить это занятие?", "Подтверждение удаления",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question);
+        //        buttonPanel.Children.Add(deleteButton);
 
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        // Удаляем из базы
-                        DeleteScheduleItem(item.ScheduleID);
+        //        // Обработчик для кнопки удаления
+        //        deleteButton.Click += (s, e) =>
+        //        {
+        //            var result = MessageBox.Show("Вы уверены, что хотите удалить это занятие?", "Подтверждение удаления",
+        //                MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                        // Обновляем отображение
-                        LoadScheduleData();
-                        UpdateCalendarView();
+        //            if (result == MessageBoxResult.Yes)
+        //            {
+        //                // Удаляем из базы
+        //                DeleteScheduleItem(item.ScheduleID);
 
-                        // Закрываем окно
-                        editWindow.Close();
-                    }
-                };
-            }
+        //                // Обновляем отображение
+        //                LoadScheduleData();
+        //                UpdateCalendarView();
 
-            Grid.SetRow(buttonPanel, 15);
-            grid.Children.Add(buttonPanel);
+        //                // Закрываем окно
+        //                editWindow.Close();
+        //            }
+        //        };
+        //    }
 
-            // Обработчики событий для кнопок
-            saveButton.Click += (s, e) =>
-            {
-                // Проверяем заполнение всех обязательных полей
-                if (datePicker.SelectedDate.HasValue &&
-                    timeComboBox.SelectedValue != null &&
-                    courseComboBox.SelectedValue != null &&
-                    groupComboBox.SelectedValue != null &&
-                    cabinetComboBox.SelectedValue != null &&
-                    teacherComboBox.SelectedValue != null)
-                {
-                    // Обновляем данные элемента
-                    item.Date = datePicker.SelectedDate.Value;
+        //    Grid.SetRow(buttonPanel, 15);
+        //    grid.Children.Add(buttonPanel);
 
-                    // Получаем выбранное время
-                    int selectedTimeId = (int)timeComboBox.SelectedValue;
-                    var selectedTime = timesList.FirstOrDefault(t => t.TimeID == selectedTimeId);
+        //    // Обработчики событий для кнопок
+        //    saveButton.Click += (s, e) =>
+        //    {
+        //        // Проверяем заполнение всех обязательных полей
+        //        if (datePicker.SelectedDate.HasValue &&
+        //            timeComboBox.SelectedValue != null &&
+        //            courseComboBox.SelectedValue != null &&
+        //            groupComboBox.SelectedValue != null &&
+        //            cabinetComboBox.SelectedValue != null &&
+        //            teacherComboBox.SelectedValue != null)
+        //        {
+        //            // Обновляем данные элемента
+        //            item.Date = datePicker.SelectedDate.Value;
 
-                    if (selectedTime != null)
-                    {
-                        item.TimeID = selectedTimeId;
-                        item.StartTime = selectedTime.TimeStart;
-                        item.EndTime = selectedTime.TimeEnd;
-                    }
+        //            // Получаем выбранное время
+        //            int selectedTimeId = (int)timeComboBox.SelectedValue;
+        //            var selectedTime = timesList.FirstOrDefault(t => t.TimeID == selectedTimeId);
 
-                    item.CourseID = (int)courseComboBox.SelectedValue;
-                    item.CourseName = (courseComboBox.SelectedItem as Course)?.CourseName;
+        //            if (selectedTime != null)
+        //            {
+        //                item.TimeID = selectedTimeId;
+        //                item.StartTime = selectedTime.TimeStart;
+        //                item.EndTime = selectedTime.TimeEnd;
+        //            }
 
-                    item.GroupID = (int)groupComboBox.SelectedValue;
-                    item.GroupName = (groupComboBox.SelectedItem as Group)?.GroupName;
+        //            item.CourseID = (int)courseComboBox.SelectedValue;
+        //            item.CourseName = (courseComboBox.SelectedItem as Course)?.CourseName;
 
-                    item.CabinetID = (int)cabinetComboBox.SelectedValue;
-                    item.CabinetName = (cabinetComboBox.SelectedItem as Cabinet)?.CabinetName;
+        //            item.GroupID = (int)groupComboBox.SelectedValue;
+        //            item.GroupName = (groupComboBox.SelectedItem as Group)?.GroupName;
 
-                    item.TeacherID = (int)teacherComboBox.SelectedValue;
-                    item.TeacherName = (teacherComboBox.SelectedItem as UserFullName)?.FullName;
+        //            item.CabinetID = (int)cabinetComboBox.SelectedValue;
+        //            item.CabinetName = (cabinetComboBox.SelectedItem as Cabinet)?.CabinetName;
 
-                    // Сохраняем изменения в базу
-                    SaveScheduleItem(item);
+        //            item.TeacherID = (int)teacherComboBox.SelectedValue;
+        //            item.TeacherName = (teacherComboBox.SelectedItem as UserFullName)?.FullName;
 
-                    // Обновляем отображение
-                    LoadScheduleData();
-                    UpdateCalendarView();
+        //            // Сохраняем изменения в базу
+        //            SaveScheduleItem(item);
 
-                    // Закрываем окно
-                    editWindow.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            };
+        //            // Обновляем отображение
+        //            LoadScheduleData();
+        //            UpdateCalendarView();
 
-            cancelButton.Click += (s, e) => editWindow.Close();
+        //            // Закрываем окно
+        //            editWindow.Close();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        }
+        //    };
 
-            editWindow.Content = grid;
-            editWindow.ShowDialog();
-        }
+        //    cancelButton.Click += (s, e) => editWindow.Close();
+
+        //    editWindow.Content = grid;
+        //    editWindow.ShowDialog();
+        //}
         
     }
 

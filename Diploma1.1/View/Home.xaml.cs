@@ -36,25 +36,24 @@ namespace Diploma1._1.View
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            RadioButton radioButton = sender as RadioButton;
-            if (radioButton != null && radioButton.IsChecked == true)
+            if (sender is RadioButton radioButton)
             {
                 switch (radioButton.Content.ToString())
                 {
                     case " Рабочий стол":
-                        PagesNavigation.Content = new SchedulePage();
+                        PagesNavigation.Content = new Desktop();
                         break;
                     case " Расписание":
-                        PagesNavigation.Content = new Schedule();
+                        PagesNavigation.Content = new SchedulePage();
+                        break;
+                    case " Планировщик задач":
+                        PagesNavigation.Content = new Planner();
                         break;
                     case " Посещение":
                         PagesNavigation.Content = new Visit();
                         break;
                     case " Журнал успеваемости":
                         PagesNavigation.Content = new Gradebook();
-                        break;
-                    case " Планировщик":
-                        PagesNavigation.Content = new Planner();
                         break;
                     case " Справочник":
                         PagesNavigation.Content = new Handbook();
@@ -78,7 +77,7 @@ namespace Diploma1._1.View
         }
         private void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).Close();
+            this.Close();
         }
 
         private void btn_maximize_Click(object sender, RoutedEventArgs e)
@@ -89,7 +88,7 @@ namespace Diploma1._1.View
         private void btn_minimize_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).WindowState = WindowState.Minimized;
-        }
+        }   
         private void DockPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount >= 2)

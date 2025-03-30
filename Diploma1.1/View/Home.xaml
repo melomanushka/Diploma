@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Diploma1._1.View"
         mc:Ignorable="d"
-        Title="Home" Height="700" Width="1090"
+        Title="Home" Height="750" Width="1100"
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="Transparent" AllowsTransparency="True"
         ResizeMode="NoResize" WindowState="Normal"
@@ -39,7 +39,7 @@
                             <EventTrigger RoutedEvent="ToggleButton.Unchecked">
                                 <BeginStoryboard>
                                     <Storyboard x:Name="HideStackPanel">
-                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="200" To="60" Duration="0:0:0.3">
+                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="60" Duration="0:0:0.3">
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -47,7 +47,7 @@
                             <EventTrigger RoutedEvent="ToggleButton.Checked">
                                 <BeginStoryboard>
                                     <Storyboard x:Name="ShowStackPanel">
-                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="60" To="200" Duration="0:0:0.3">
+                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="60" To="230" Duration="0:0:0.3">
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -60,7 +60,7 @@
                         <RadioButton x:Name="rdSounds" Content=" Расписание" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
                         <RadioButton x:Name="rdSouds" Content=" Посещение" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
                         <RadioButton x:Name="rdSuds" Content=" Журнал успеваемости" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
-                        <RadioButton x:Name="rdSuuds" Content=" Планировщик" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
+                        <RadioButton x:Name="rdSuuds" Content=" Планировщик задач" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
                         <RadioButton x:Name="rdNotes" Content=" Справочник" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource notes}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
                         <RadioButton x:Name="rdReport" Content=" Отчёты" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource notebook}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
                     </StackPanel>
