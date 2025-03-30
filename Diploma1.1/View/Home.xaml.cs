@@ -46,7 +46,7 @@ namespace Diploma1._1.View
                     case " Расписание":
                         PagesNavigation.Content = new SchedulePage();
                         break;
-                    case " Планировщик задач":
+                    case " Планировщик":
                         PagesNavigation.Content = new Planner();
                         break;
                     case " Посещение":

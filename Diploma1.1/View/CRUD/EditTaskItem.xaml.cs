@@ -1,20 +1,24 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Diploma1._1.Model;
 
 namespace Diploma1._1.View.CRUD
 {
+    /// <summary>
+    /// Логика взаимодействия для EditTaskItem.xaml
+    /// </summary>
     public partial class EditTaskItem : Window
     {
         private TeacherTask currentTask;
-        private int teacherId;
+        private int currentTeacherId;
 
         public EditTaskItem(int teacherId, int taskId = 0)
         {
             InitializeComponent();
-            this.teacherId = teacherId;
+            this.currentTeacherId = teacherId;
             InitializeComboBoxes();
 
             if (taskId > 0)
@@ -24,7 +28,8 @@ namespace Diploma1._1.View.CRUD
                     currentTask = context.TeacherTask.Find(taskId);
                     if (currentTask != null)
                     {
-                        DatePicker.SelectedDate = currentTask.DataTask;
+                        CreationDatePicker.SelectedDate = currentTask.DataTask;
+                        DueDatePicker.SelectedDate = currentTask.DataTask;
                         TaskTextBox.Text = currentTask.Task;
                         StatusCheckBox.IsChecked = currentTask.StatusTask;
                         
@@ -32,6 +37,8 @@ namespace Diploma1._1.View.CRUD
                         {
                             StudentComboBox.SelectedValue = currentTask.StudentID.Value;
                         }
+
+                        TeacherComboBox.SelectedValue = currentTask.TeacherID;
                     }
                 }
             }
@@ -43,7 +50,9 @@ namespace Diploma1._1.View.CRUD
                     TeacherID = teacherId,
                     StatusTask = false
                 };
-                DatePicker.SelectedDate = currentTask.DataTask;
+                CreationDatePicker.SelectedDate = DateTime.Now;
+                DueDatePicker.SelectedDate = DateTime.Now;
+                TeacherComboBox.SelectedValue = teacherId;
             }
         }
 
@@ -56,15 +65,47 @@ namespace Diploma1._1.View.CRUD
                     .Select(s => new
                     {
                         StudentID = s.StudentID,
-                        FullName = $"{s.LastName} {s.FirstName}"
+                        LastName = s.LastName,
+                        FirstName = s.FirstName
                     })
-                    .ToList();
+                    .ToList() // Выполняем запрос к базе данных
+                    .Select(s => new // Теперь работаем с объектами в памяти
+                    {
+                        StudentID = s.StudentID,
+                        FullName = s.LastName + " " + s.FirstName
+                    });
 
                 var studentObservableCollection = new ObservableCollection<dynamic>(students);
                 StudentComboBox.ItemsSource = studentObservableCollection;
                 StudentComboBox.DisplayMemberPath = "FullName";
                 StudentComboBox.SelectedValuePath = "StudentID";
+
+                // Заполняем комбобокс преподавателей
+                var teachers = context.Employee
+                    .Where(e => e.EmployeeRoleID == 2)
+                    .Select(t => new
+                    {
+                        TeacherID = t.EmployeeID,
+                        LastName = t.LastName,
+                        FirstName = t.FirstName
+                    })
+                    .ToList() // Выполняем запрос к базе данных
+                    .Select(t => new // Теперь работаем с объектами в памяти
+                    {
+                        TeacherID = t.TeacherID,
+                        FullName = t.LastName + " " + t.FirstName
+                    });
+
+                var teacherObservableCollection = new ObservableCollection<dynamic>(teachers);
+                TeacherComboBox.ItemsSource = teacherObservableCollection;
+                TeacherComboBox.DisplayMemberPath = "FullName";
+                TeacherComboBox.SelectedValuePath = "TeacherID";
             }
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -90,6 +131,7 @@ namespace Diploma1._1.View.CRUD
                             existingTask.DataTask = currentTask.DataTask;
                             existingTask.Task = currentTask.Task;
                             existingTask.StudentID = currentTask.StudentID;
+                            existingTask.TeacherID = currentTask.TeacherID;
                             existingTask.StatusTask = currentTask.StatusTask;
                         }
                     }
@@ -108,9 +150,15 @@ namespace Diploma1._1.View.CRUD
 
         private bool ValidateInputs()
         {
-            if (DatePicker.SelectedDate == null)
+            if (CreationDatePicker.SelectedDate == null)
             {
-                MessageBox.Show("Пожалуйста, выберите дату", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Пожалуйста, выберите дату создания", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (DueDatePicker.SelectedDate == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите дату выполнения", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
 
@@ -120,10 +168,17 @@ namespace Diploma1._1.View.CRUD
                 return false;
             }
 
-            currentTask.DataTask = DatePicker.SelectedDate.Value;
+            if (TeacherComboBox.SelectedValue == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите преподавателя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            currentTask.DataTask = DueDatePicker.SelectedDate.Value;
             currentTask.Task = TaskTextBox.Text;
             currentTask.StatusTask = StatusCheckBox.IsChecked ?? false;
             currentTask.StudentID = StudentComboBox.SelectedValue as int?;
+            currentTask.TeacherID = (int)TeacherComboBox.SelectedValue;
 
             return true;
         }
@@ -134,4 +189,4 @@ namespace Diploma1._1.View.CRUD
             Close();
         }
     }
-} 
+}

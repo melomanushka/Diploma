@@ -87,23 +87,23 @@ namespace Diploma1._1.View.Pages
 
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            //var editTaskWindow = new EditTaskItem(currentTeacherId);
-            //if (editTaskWindow.ShowDialog() == true)
-            //{
-            //    LoadTasks();
-            //}
+            var editTaskWindow = new EditTaskItem(currentTeacherId);
+            if (editTaskWindow.ShowDialog() == true)
+            {
+                LoadTasks();
+            }
         }
 
         private void TasksListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //if (TasksListView.SelectedItem is TaskItem selectedTask)
-            //{
-            //    var editTaskWindow = new EditTaskItem(currentTeacherId, selectedTask.TaskID);
-            //    if (editTaskWindow.ShowDialog() == true)
-            //    {
-            //        LoadTasks();
-            //    }
-            //}
+            if (TasksListView.SelectedItem is TaskItem selectedTask)
+            {
+                var editTaskWindow = new EditTaskItem(currentTeacherId, selectedTask.TaskID);
+                if (editTaskWindow.ShowDialog() == true)
+                {
+                    LoadTasks();
+                }
+            }
         }
     }
 

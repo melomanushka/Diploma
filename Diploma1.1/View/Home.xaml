@@ -19,7 +19,7 @@
             </Grid.ColumnDefinitions>
             <!-- Start: GridColum Left-->
             <Border CornerRadius="8 0 0 8" Background="#E5E4E2">
-                <Grid x:Name="gridMenu" Width="60">
+                <Grid x:Name="gridMenu" Width="50">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
                         <RowDefinition Height="80"/>
@@ -34,12 +34,12 @@
                     </StackPanel>
 
                     <!-- Menu -->
-                    <ToggleButton x:Name="btnMenu"  HorizontalAlignment="Right" BorderThickness="0" Background="Transparent" VerticalAlignment="Center" Style="{StaticResource MenuIconStyle}" Margin="0 0 15 0">
+                    <ToggleButton x:Name="btnMenu"  HorizontalAlignment="Right" BorderThickness="0" Background="Transparent" VerticalAlignment="Center" Style="{StaticResource MenuIconStyle}" Margin="0 0 10 0">
                         <ToggleButton.Triggers>
                             <EventTrigger RoutedEvent="ToggleButton.Unchecked">
                                 <BeginStoryboard>
                                     <Storyboard x:Name="HideStackPanel">
-                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="60" Duration="0:0:0.3">
+                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="220" To="50" Duration="0:0:0.3">
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -47,7 +47,7 @@
                             <EventTrigger RoutedEvent="ToggleButton.Checked">
                                 <BeginStoryboard>
                                     <Storyboard x:Name="ShowStackPanel">
-                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="60" To="230" Duration="0:0:0.3">
+                                        <DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="50" To="220" Duration="0:0:0.3">
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -56,16 +56,16 @@
                     </ToggleButton>
 
                     <StackPanel Grid.Row="3">
-                        <RadioButton x:Name="rdSound" Content=" Рабочий стол" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
-                        <RadioButton x:Name="rdSounds" Content=" Расписание" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
-                        <RadioButton x:Name="rdSouds" Content=" Посещение" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
-                        <RadioButton x:Name="rdSuds" Content=" Журнал успеваемости" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
-                        <RadioButton x:Name="rdSuuds" Content=" Планировщик задач" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource courses}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
-                        <RadioButton x:Name="rdNotes" Content=" Справочник" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource notes}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
-                        <RadioButton x:Name="rdReport" Content=" Отчёты" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource notebook}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
+                        <RadioButton x:Name="rdSound" Content=" Рабочий стол" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource home}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
+                        <RadioButton x:Name="rdSounds" Content=" Расписание" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource notes}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
+                        <RadioButton x:Name="rdSouds" Content=" Посещение" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource attendance}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
+                        <RadioButton x:Name="rdSuds" Content=" Журнал успеваемости" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource gradebook}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
+                        <RadioButton x:Name="rdSuuds" Content=" Планировщик" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource task_planner}" Margin="0 5 0 5" Checked="RadioButton_Checked" Cursor="Hand"/>
+                        <RadioButton x:Name="rdNotes" Content=" Справочник" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource open_book}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
+                        <RadioButton x:Name="rdReport" Content=" Отчёты" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource payment}" Margin="0 5 0 5" Checked="RadioButton_Checked"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Margin="0 0 0 80">
+                    <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Margin="0 0 0 70">
                         <RadioButton x:Name="rdClose" Content="Выход" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource logout}" Margin="0 0 0 0" Checked="rdClose_Checked" />
                     </StackPanel>
 

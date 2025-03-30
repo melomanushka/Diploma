@@ -179,6 +179,9 @@
     <Compile Include="View\CRUD\EditScheduleItem.xaml.cs">
       <DependentUpon>EditScheduleItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CRUD\EditTaskItem.xaml.cs">
+      <DependentUpon>EditTaskItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
@@ -219,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CRUD\EditScheduleItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditTaskItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
