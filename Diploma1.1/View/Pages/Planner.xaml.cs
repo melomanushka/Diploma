@@ -112,6 +112,7 @@ namespace Diploma1._1.View.Pages
         public int TaskID { get; set; }
         public string Time { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public string StudentName { get; set; }
         public string Status { get; set; }
     }

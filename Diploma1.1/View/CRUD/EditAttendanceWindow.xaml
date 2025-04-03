@@ -1,0 +1,119 @@
+﻿<Window x:Class="Diploma1._1.View.CRUD.EditAttendanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Diploma1._1.View.CRUD"
+        mc:Ignorable="d"
+        Title="Редактирование посещаемости" 
+        Height="350" Width="450"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+                   Text="Редактирование посещаемости"
+                   FontSize="18" FontWeight="Bold"
+                   Margin="0,0,0,20"/>
+
+        <!-- Студент -->
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Студент:"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,10"/>
+
+        <TextBlock x:Name="StudentNameTextBlock"
+                   Grid.Row="1" Grid.Column="1"
+                   Text="Фамилия Имя Отчество"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <!-- Дата -->
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Text="Дата:"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,10"/>
+
+        <TextBlock x:Name="DateTextBlock"
+                   Grid.Row="2" Grid.Column="1"
+                   Text="01.01.2023"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <!-- Время -->
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="Время:"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,10"/>
+
+        <TextBlock x:Name="TimeTextBlock"
+                   Grid.Row="3" Grid.Column="1"
+                   Text="10:00"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <!-- Статус -->
+        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Text="Статус:"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,10"/>
+
+        <ComboBox x:Name="StatusComboBox"
+                  Grid.Row="4" Grid.Column="1"
+                  Margin="0,0,0,10"/>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button x:Name="SaveButton"
+                    Content="Сохранить"
+                    Width="100" Height="30"
+                    Margin="0,0,10,0"
+                    Click="SaveButton_Click"
+                    Background="#2196F3"
+                    Foreground="White"
+                    BorderThickness="0">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="CancelButton"
+                    Content="Отмена"
+                    Width="100" Height="30"
+                    Click="CancelButton_Click"
+                    Background="#E0E0E0"
+                    Foreground="#333333"
+                    BorderThickness="0">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
