@@ -179,6 +179,9 @@
     <Compile Include="View\CRUD\EditAttendanceWindow.xaml.cs">
       <DependentUpon>EditAttendanceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CRUD\EditGradeWindow.xaml.cs">
+      <DependentUpon>EditGradeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CRUD\EditScheduleItem.xaml.cs">
       <DependentUpon>EditScheduleItem.xaml</DependentUpon>
     </Compile>
@@ -225,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CRUD\EditAttendanceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditGradeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

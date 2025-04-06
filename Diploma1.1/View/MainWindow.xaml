@@ -20,9 +20,9 @@
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            
-            
-            <Image Source="D:\визуалка проекты\Diploma1.1\Diploma1.1\Image\start.png" Margin="2"/>
+
+
+            <Image Source="D:\визуалкапроекты\DiplomaPitki\Diploma1.1\Image\start.png" Margin="2"/>
 
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">

@@ -166,15 +166,15 @@ namespace Diploma1._1.View.Pages
             switch (currentTable)
             {
                 case "Источники информации":
-                    editWindow = new EditInformationSourceWindow(item as InformationSource);
+                    //editWindow = new EditInformationSourceWindow(item as InformationSource);
                     break;
 
                 case "Сотрудники":
-                    editWindow = new EditEmployeeWindow(item as Employee);
+                    //editWindow = new EditEmployeeWindow(item as Employee);
                     break;
 
                 case "Клиенты":
-                    editWindow = new EditClientWindow(item as Client);
+                    //editWindow = new EditClientWindow(item as Client);
                     break;
 
                 // Добавьте создание окон редактирования для остальных таблиц
@@ -230,7 +230,7 @@ namespace Diploma1._1.View.Pages
                 {
                     case "Источники информации":
                         var source = item as InformationSource;
-                        return source.SourceName.ToLower().Contains(searchText);
+                        return source.InformationSourceName.ToLower().Contains(searchText);
 
                     case "Сотрудники":
                         var employee = item as Employee;
