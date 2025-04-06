@@ -17,6 +17,7 @@ namespace Diploma1._1.View.Pages
         private ObservableCollection<GradeRecord> gradeRecords;
         private List<string> grades = new List<string> { "5", "4", "3", "2", "Н" }; // Возможные оценки
         private Dimploma1Entities context;
+        private bool isIndividualLesson = false;
 
         public Gradebook()
         {
@@ -34,14 +35,42 @@ namespace Diploma1._1.View.Pages
             // Установка возможных оценок в комбобокс
             ((DataGridComboBoxColumn)GradesDataGrid.Columns[2]).ItemsSource = grades;
 
-            // Здесь должна быть загрузка групп из базы данных
-            GroupComboBox.ItemsSource = new List<string> { "Группа 1", "Группа 2", "Группа 3" };
+            // Загрузка групп
+            var groups = context.Group.ToList();
+            GroupComboBox.ItemsSource = groups;
+            GroupComboBox.DisplayMemberPath = "GroupName";
+            GroupComboBox.SelectedValuePath = "GroupID";
 
-            // Здесь должна быть загрузка предметов из базы данных
-            SubjectComboBox.ItemsSource = new List<string> { "Математика", "Физика", "Информатика" };
+            // Загрузка всех студентов для индивидуальных занятий
+            var students = context.Student.ToList();
+            StudentComboBox.ItemsSource = students;
+            StudentComboBox.DisplayMemberPath = "LastName"; // Можно настроить более полное отображение ФИО
+            StudentComboBox.SelectedValuePath = "StudentID";
+
+            // Загрузка предметов
+            var subjects = context.Course.ToList();
+            SubjectComboBox.ItemsSource = subjects;
+            IndividualSubjectComboBox.ItemsSource = subjects;
+            SubjectComboBox.DisplayMemberPath = "CourseName";
+            IndividualSubjectComboBox.DisplayMemberPath = "CourseName";
+            SubjectComboBox.SelectedValuePath = "CourseID";
+            IndividualSubjectComboBox.SelectedValuePath = "CourseID";
 
             // Установка текущей даты
             LessonDatePicker.SelectedDate = DateTime.Today;
+        }
+
+        private void LessonType_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton)
+            {
+                isIndividualLesson = radioButton == IndividualLessonRadio;
+                //GroupSelectionGrid.Visibility = isIndividualLesson ? Visibility.Collapsed : Visibility.Visible;
+                //StudentSelectionGrid.Visibility = isIndividualLesson ? Visibility.Visible : Visibility.Collapsed;
+                
+                // Очищаем таблицу при смене типа занятия
+                //gradeRecords.Clear();
+            }
         }
 
         private void GroupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,58 +122,101 @@ namespace Diploma1._1.View.Pages
 
         private void LoadAttendanceData()
         {
-            if (GroupComboBox.SelectedValue == null || SubjectComboBox.SelectedValue == null ||
-                LessonDatePicker.SelectedDate == null)
+            if (LessonDatePicker.SelectedDate == null) return;
+
+            DateTime lessonDate = LessonDatePicker.SelectedDate.Value;
+            gradeRecords.Clear();
+
+            if (isIndividualLesson)
+            {
+                LoadIndividualLessonData(lessonDate);
+            }
+            else
+            {
+                LoadGroupLessonData(lessonDate);
+            }
+        }
+
+        private void LoadIndividualLessonData(DateTime lessonDate)
+        {
+            if (StudentComboBox.SelectedValue == null || IndividualSubjectComboBox.SelectedValue == null)
+                return;
+
+            int studentId = (int)StudentComboBox.SelectedValue;
+            int subjectId = (int)IndividualSubjectComboBox.SelectedValue;
+
+            // Загружаем данные индивидуального занятия
+            //var student = context.Student.FirstOrDefault(s => s.StudentID == studentId);
+            //if (student != null)
+            //{
+            //    // Проверяем существующую оценку
+            //    var individualLesson = context.IndividualLesson
+            //        .FirstOrDefault(il => il.StudentID == studentId &&
+            //                            il.CourseID == subjectId &&
+            //                            il.LessonDate == lessonDate);
+
+            //    string grade = individualLesson?.Grade ?? "";
+            //    string note = individualLesson?.Note ?? "";
+
+            //    gradeRecords.Add(new GradeRecord
+            //    {
+            //        Number = 1,
+            //        StudentName = $"{student.LastName} {student.FirstName} {student.MiddleName}",
+            //        Grade = grade,
+            //        Note = note
+            //    });
+            //}
+        }
+
+        private void LoadGroupLessonData(DateTime lessonDate)
+        {
+            if (GroupComboBox.SelectedValue == null || SubjectComboBox.SelectedValue == null)
                 return;
 
             int groupId = (int)GroupComboBox.SelectedValue;
             int subjectId = (int)SubjectComboBox.SelectedValue;
-            DateTime lessonDate = LessonDatePicker.SelectedDate.Value;
 
             // Загружаем расписание для выбранной группы и предмета
             var schedule = context.Schedule
-                .Where(s => s.GroupID == groupId && s.CourseID == subjectId &&
+                .Where(s => s.GroupID == groupId && 
+                           s.CourseID == subjectId &&
                            s.ClassDate == lessonDate)
                 .OrderBy(s => s.ClassDate)
                 .ToList();
 
-            gradeRecords.Clear();
-
             foreach (var scheduleItem in schedule)
             {
-                // Получаем студентов группы
                 var students = context.GroupStudent
                     .Where(gs => gs.GroupID == groupId)
                     .Select(gs => gs.Student)
                     .ToList();
 
-                foreach (var student in students)
-                {
-                    // Проверяем посещаемость
-                    var attendance = context.Attendance
-                        .FirstOrDefault(a => a.ScheduleID == scheduleItem.ScheduleID &&
-                                           a.StudentID == student.StudentID);
+                int counter = 1;
+                //foreach (var student in students)
+                //{
+                //    var attendance = context.Attendance
+                //        .FirstOrDefault(a => a.ScheduleID == scheduleItem.ScheduleID &&
+                //                           a.StudentID == student.StudentID);
 
-                    // Получаем статус посещаемости из связанной таблицы
-                    string status = "Не отмечено";
-                    if (attendance != null && attendance.StatusAttendanceID.HasValue)
-                    {
-                        var statusAttendance = context.StatusAttendance
-                            .FirstOrDefault(sa => sa.StatusAttendanceID == attendance.StatusAttendanceID);
-                        if (statusAttendance != null)
-                        {
-                            status = statusAttendance.StatusAttendanceName;
-                        }
-                    }
+                //    string grade = attendance?.Grade ?? "";
+                //    string note = attendance?.Note ?? "";
 
-                    gradeRecords.Add(new GradeRecord
-                    {
-                        Number = 1, // Assuming a single grade per student
-                        StudentName = $"{student.LastName} {student.FirstName} {student.MiddleName}",
-                        Grade = status,
-                        Note = ""
-                    });
-                }
+                //    gradeRecords.Add(new GradeRecord
+                //    {
+                //        Number = counter++,
+                //        StudentName = $"{student.LastName} {student.FirstName} {student.MiddleName}",
+                //        Grade = grade,
+                //        Note = note
+                //    });
+                //}
+            }
+        }
+
+        private void StudentComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StudentComboBox.SelectedItem != null)
+            {
+                LoadAttendanceData();
             }
         }
 
