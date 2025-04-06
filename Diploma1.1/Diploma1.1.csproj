@@ -179,14 +179,47 @@
     <Compile Include="View\CRUD\EditAttendanceWindow.xaml.cs">
       <DependentUpon>EditAttendanceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CRUD\EditCabinetWindow.xaml.cs">
+      <DependentUpon>EditCabinetWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditClientWindow.xaml.cs">
+      <DependentUpon>EditClientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditContractWindow.xaml.cs">
+      <DependentUpon>EditContractWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditCourseWindow.xaml.cs">
+      <DependentUpon>EditCourseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditDiscountWindow.xaml.cs">
+      <DependentUpon>EditDiscountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditEmployeeWindow.xaml.cs">
+      <DependentUpon>EditEmployeeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CRUD\EditGradeWindow.xaml.cs">
       <DependentUpon>EditGradeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditInformationSourceWindow.xaml.cs">
+      <DependentUpon>EditInformationSourceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditPaymentWindow.xaml.cs">
+      <DependentUpon>EditPaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditPriceWindow.xaml.cs">
+      <DependentUpon>EditPriceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CRUD\EditScheduleItem.xaml.cs">
       <DependentUpon>EditScheduleItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CRUD\EditStudentWindow.xaml.cs">
+      <DependentUpon>EditStudentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CRUD\EditTaskItem.xaml.cs">
       <DependentUpon>EditTaskItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CRUD\EditTypeCourseWindow.xaml.cs">
+      <DependentUpon>EditTypeCourseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
@@ -231,7 +264,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CRUD\EditCabinetWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditClientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditContractWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditCourseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditDiscountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditEmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CRUD\EditGradeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditInformationSourceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditPaymentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditPriceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,7 +308,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CRUD\EditStudentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CRUD\EditTaskItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CRUD\EditTypeCourseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

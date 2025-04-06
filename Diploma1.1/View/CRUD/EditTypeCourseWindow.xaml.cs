@@ -17,43 +17,37 @@ using System.Windows.Shapes;
 namespace Diploma1._1.View.CRUD
 {
     /// <summary>
-    /// Логика взаимодействия для EditInformationSourceWindow.xaml
+    /// Логика взаимодействия для EditTypeCourseWindow.xaml
     /// </summary>
-    public partial class EditInformationSourceWindow : Window
+    public partial class EditTypeCourseWindow : Window
     {
-        public InformationSource CurrentSource { get; set; }
+        public TypeCourse CurrentTypeCourse { get; set; }
         private bool IsAdding = false;
 
-        public EditInformationSourceWindow(InformationSource sourceToEdit = null)
+        public EditTypeCourseWindow(TypeCourse typeCourse = null)
         {
             InitializeComponent();
-            DataContext = this; // Set DataContext for Binding
+            DataContext = this;
 
-            if (sourceToEdit == null)
+            if (typeCourse == null)
             {
-                // Adding new source
-                CurrentSource = new InformationSource();
+                CurrentTypeCourse = new TypeCourse();
                 IsAdding = true;
-                Title = "Добавить Источник Информации";
+                Title = "Добавить Тип Курса";
             }
             else
             {
-                // Editing existing source
-                CurrentSource = sourceToEdit;
+                CurrentTypeCourse = typeCourse;
                 IsAdding = false;
-                Title = "Редактировать Источник Информации";
-                // Consider loading a fresh copy if needed, depends on context lifetime
+                Title = "Редактировать Тип Курса";
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Basic Validation
-            if (string.IsNullOrWhiteSpace(CurrentSource.InformationSourceName))
+            if (string.IsNullOrWhiteSpace(CurrentTypeCourse.TypeCourseName))
             {
-                MessageBox.Show("Название источника не может быть пустым.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning);
-                SourceNameTextBox.Focus();
-                return;
+                MessageBox.Show("Название типа не может быть пустым.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning); return;
             }
 
             try
@@ -62,19 +56,16 @@ namespace Diploma1._1.View.CRUD
                 {
                     if (IsAdding)
                     {
-                        // Add new entity
-                        context.InformationSource.Add(CurrentSource);
+                        context.TypeCourse.Add(CurrentTypeCourse);
                     }
                     else
                     {
-                        // Attach and mark as modified
-                        context.InformationSource.Attach(CurrentSource);
-                        context.Entry(CurrentSource).State = EntityState.Modified;
+                        context.TypeCourse.Attach(CurrentTypeCourse);
+                        context.Entry(CurrentTypeCourse).State = EntityState.Modified;
                     }
                     context.SaveChanges();
-                } // Context disposed
-
-                DialogResult = true; // Indicate success
+                }
+                DialogResult = true;
                 Close();
             }
             catch (DbUpdateException dbEx)
@@ -89,7 +80,7 @@ namespace Diploma1._1.View.CRUD
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false; // Indicate cancellation
+            DialogResult = false;
             Close();
         }
     }

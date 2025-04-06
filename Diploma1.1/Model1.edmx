@@ -98,7 +98,7 @@
           <Property Name="DiscountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DiscountName" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActiveDiscount" Type="bit" />
-          <Property Name="DiscountValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiscountValue" Type="int" />
           <Property Name="DateCreation" Type="date" />
           <Property Name="DateStart" Type="date" />
           <Property Name="DateEnd" Type="date" />
@@ -1134,7 +1134,7 @@
           <Property Name="DiscountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DiscountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActiveDiscount" Type="Boolean" />
-          <Property Name="DiscountValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiscountValue" Type="Int32" />
           <Property Name="DateCreation" Type="DateTime" Precision="0" />
           <Property Name="DateStart" Type="DateTime" Precision="0" />
           <Property Name="DateEnd" Type="DateTime" Precision="0" />

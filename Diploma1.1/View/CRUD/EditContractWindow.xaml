@@ -1,0 +1,81 @@
+﻿<Window x:Class="Diploma1._1.View.CRUD.EditContractWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Diploma1._1.View.CRUD"
+        mc:Ignorable="d"
+Title="Редактировать Договор" Height="550" Width="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Клиент:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ClientComboBox" Margin="0,5"
+                   DisplayMemberPath="FullName" SelectedValuePath="ClientID"
+                   SelectedValue="{Binding CurrentContract.ClientID, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Студент:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="StudentComboBox" Margin="0,5"
+                   DisplayMemberPath="FullName" SelectedValuePath="StudentID"
+                   SelectedValue="{Binding CurrentContract.StudentID, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Цена/Курс:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="PriceComboBox" Margin="0,5"
+                   DisplayMemberPath="PriceIdentifier" SelectedValuePath="PriceID"
+                   SelectedValue="{Binding CurrentContract.PriceID, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Margin="0,5,20,5">
+                <Label Content="Дата Создания:" Padding="0"/>
+                <DatePicker x:Name="CreateDatePicker" SelectedDate="{Binding CurrentContract.DateCreate}" IsEnabled="False"/>
+            </StackPanel>
+            <StackPanel Margin="0,5,20,5">
+                <Label Content="Дата Начала:" Padding="0"/>
+                <DatePicker x:Name="StartDatePicker" SelectedDate="{Binding CurrentContract.DateStart}"/>
+            </StackPanel>
+            <StackPanel Margin="0,5,0,5">
+                <Label Content="Дата Окончания:" Padding="0"/>
+                <DatePicker x:Name="EndDatePicker" SelectedDate="{Binding CurrentContract.DateEnd}"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <Label Grid.Row="4" Grid.Column="0" Content="Форма обуч.:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="FormComboBox" Margin="0,5"
+                   DisplayMemberPath="FormOfStudyName"
+                   SelectedValuePath="FormOfStudyID"
+                   SelectedValue="{Binding CurrentContract.FormOfStudyID}"/>
+
+        <Label Grid.Row="5" Grid.Column="0" Content="Статус:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="StatusComboBox" Margin="0,5"
+                   DisplayMemberPath="StatusContractName"
+                   SelectedValuePath="StatusContractID"
+                   SelectedValue="{Binding CurrentContract.StatusContractID}"/>
+
+        <Label Grid.Row="6" Grid.Column="0" Content="Реквизиты:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="RequisiteComboBox" Margin="0,5" IsEnabled="False"
+                  DisplayMemberPath="RequisiteIdentifier" SelectedValuePath="RequisiteID"
+                  SelectedValue="{Binding CurrentContract.RequisiteID}"/>
+
+
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="Сохранить" Width="100" Margin="0,0,10,0" Click="SaveButton_Click" IsDefault="True"/>
+            <Button Content="Отмена" Width="100" Click="CancelButton_Click" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

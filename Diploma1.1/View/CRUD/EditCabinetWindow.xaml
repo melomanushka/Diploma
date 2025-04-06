@@ -1,11 +1,12 @@
-﻿<Window x:Class="Diploma1._1.View.CRUD.EditInformationSourceWindow"
+﻿<Window x:Class="Diploma1._1.View.CRUD.EditCabinetWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Diploma1._1.View.CRUD"
         mc:Ignorable="d"
-        Title="EditInformationSourceWindow" Height="200" Width="600">
+Title="Редактировать Кабинет" Height="300" Width="450"
+        WindowStartupLocation="CenterScreen">
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,11 +19,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Название:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="SourceNameTextBox" Text="{Binding CurrentSource.SourceName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="Название/№:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameTextBox" Text="{Binding CurrentCabinet.CabinetName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Описание:" VerticalAlignment="Top" Margin="0,0,10,0"/>
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="DescriptionTextBox" Text="{Binding CurrentSource.Description, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="60"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Вместимость:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="CapacityTextBox" Text="{Binding CurrentCabinet.Capacity, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Оборудование:" VerticalAlignment="Top" Margin="0,0,10,0"/>
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="EquipmentTextBox" Text="{Binding CurrentCabinet.Equipment, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
 
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button Content="Сохранить" Width="100" Margin="0,0,10,0" Click="SaveButton_Click" IsDefault="True"/>

@@ -30,17 +30,17 @@
                     <ListBox x:Name="TablesListBox" 
                             Margin="0,0,10,0"
                             SelectionChanged="TablesListBox_SelectionChanged">
-                        <ListBoxItem Content="Источники информации"/>
+                        <ListBoxItem Content="Договоры"/>
                         <ListBoxItem Content="Сотрудники"/>
                         <ListBoxItem Content="Клиенты"/>
                         <ListBoxItem Content="Скидки"/>
                         <ListBoxItem Content="Оплаты"/>
-                        <ListBoxItem Content="Договоры"/>
                         <ListBoxItem Content="Цены"/>
                         <ListBoxItem Content="Типы занятий"/>
                         <ListBoxItem Content="Курсы"/>
                         <ListBoxItem Content="Кабинеты"/>
                         <ListBoxItem Content="Студенты"/>
+                        <ListBoxItem Content="Источники информации"/>
                     </ListBox>
 
                     <!-- Панель с данными -->

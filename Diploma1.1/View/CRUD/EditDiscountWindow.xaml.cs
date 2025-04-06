@@ -17,44 +17,47 @@ using System.Windows.Shapes;
 namespace Diploma1._1.View.CRUD
 {
     /// <summary>
-    /// Логика взаимодействия для EditInformationSourceWindow.xaml
+    /// Логика взаимодействия для EditDiscountWindow.xaml
     /// </summary>
-    public partial class EditInformationSourceWindow : Window
+    public partial class EditDiscountWindow : Window
     {
-        public InformationSource CurrentSource { get; set; }
+        public Discount CurrentDiscount { get; set; }
         private bool IsAdding = false;
 
-        public EditInformationSourceWindow(InformationSource sourceToEdit = null)
+        public EditDiscountWindow(Discount discount = null)
         {
             InitializeComponent();
-            DataContext = this; // Set DataContext for Binding
+            DataContext = this;
 
-            if (sourceToEdit == null)
+            if (discount == null)
             {
-                // Adding new source
-                CurrentSource = new InformationSource();
+                CurrentDiscount = new Discount();
                 IsAdding = true;
-                Title = "Добавить Источник Информации";
+                Title = "Добавить Скидку";
             }
             else
             {
-                // Editing existing source
-                CurrentSource = sourceToEdit;
+                CurrentDiscount = discount;
                 IsAdding = false;
-                Title = "Редактировать Источник Информации";
-                // Consider loading a fresh copy if needed, depends on context lifetime
+                Title = "Редактировать Скидку";
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Basic Validation
-            if (string.IsNullOrWhiteSpace(CurrentSource.InformationSourceName))
+            if (string.IsNullOrWhiteSpace(CurrentDiscount.DiscountName))
             {
-                MessageBox.Show("Название источника не может быть пустым.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning);
-                SourceNameTextBox.Focus();
+                MessageBox.Show("Название скидки обязательно.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            if (CurrentDiscount.DiscountValue== null || CurrentDiscount.DiscountValue <= 0)
+            {
+                MessageBox.Show("Процент скидки должен быть положительным числом.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PercentTextBox.Focus(); // Assuming TextBox name
+                return;
+            }
+            // Add date validation (start <= end?) if needed
 
             try
             {
@@ -62,19 +65,17 @@ namespace Diploma1._1.View.CRUD
                 {
                     if (IsAdding)
                     {
-                        // Add new entity
-                        context.InformationSource.Add(CurrentSource);
+                        context.Discount.Add(CurrentDiscount);
                     }
                     else
                     {
-                        // Attach and mark as modified
-                        context.InformationSource.Attach(CurrentSource);
-                        context.Entry(CurrentSource).State = EntityState.Modified;
+                        context.Discount.Attach(CurrentDiscount);
+                        context.Entry(CurrentDiscount).State = EntityState.Modified;
                     }
                     context.SaveChanges();
-                } // Context disposed
+                }
 
-                DialogResult = true; // Indicate success
+                DialogResult = true;
                 Close();
             }
             catch (DbUpdateException dbEx)
@@ -89,7 +90,7 @@ namespace Diploma1._1.View.CRUD
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false; // Indicate cancellation
+            DialogResult = false;
             Close();
         }
     }

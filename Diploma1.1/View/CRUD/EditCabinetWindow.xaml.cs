@@ -17,44 +17,43 @@ using System.Windows.Shapes;
 namespace Diploma1._1.View.CRUD
 {
     /// <summary>
-    /// Логика взаимодействия для EditInformationSourceWindow.xaml
+    /// Логика взаимодействия для EditCabinetWindow.xaml
     /// </summary>
-    public partial class EditInformationSourceWindow : Window
+    public partial class EditCabinetWindow : Window
     {
-        public InformationSource CurrentSource { get; set; }
+        public Cabinet CurrentCabinet { get; set; }
         private bool IsAdding = false;
 
-        public EditInformationSourceWindow(InformationSource sourceToEdit = null)
+        public EditCabinetWindow(Cabinet cabinet = null)
         {
             InitializeComponent();
-            DataContext = this; // Set DataContext for Binding
+            DataContext = this;
 
-            if (sourceToEdit == null)
+            if (cabinet == null)
             {
-                // Adding new source
-                CurrentSource = new InformationSource();
+                CurrentCabinet = new Cabinet();
                 IsAdding = true;
-                Title = "Добавить Источник Информации";
+                Title = "Добавить Кабинет";
             }
             else
             {
-                // Editing existing source
-                CurrentSource = sourceToEdit;
+                CurrentCabinet = cabinet;
                 IsAdding = false;
-                Title = "Редактировать Источник Информации";
-                // Consider loading a fresh copy if needed, depends on context lifetime
+                Title = "Редактировать Кабинет";
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Basic Validation
-            if (string.IsNullOrWhiteSpace(CurrentSource.InformationSourceName))
+            if (string.IsNullOrWhiteSpace(CurrentCabinet.CabinetName))
             {
-                MessageBox.Show("Название источника не может быть пустым.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning);
-                SourceNameTextBox.Focus();
-                return;
+                MessageBox.Show("Название/номер кабинета обязательно.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning); return;
             }
+            if (CurrentCabinet.Interchangeability == null || CurrentCabinet.Interchangeability <= 0)
+            {
+                MessageBox.Show("Вместимость должна быть положительным числом.", "Ошибка Валидации", MessageBoxButton.OK, MessageBoxImage.Warning); return;
+            }
+            // Add validation
 
             try
             {
@@ -62,19 +61,16 @@ namespace Diploma1._1.View.CRUD
                 {
                     if (IsAdding)
                     {
-                        // Add new entity
-                        context.InformationSource.Add(CurrentSource);
+                        context.Cabinet.Add(CurrentCabinet);
                     }
                     else
                     {
-                        // Attach and mark as modified
-                        context.InformationSource.Attach(CurrentSource);
-                        context.Entry(CurrentSource).State = EntityState.Modified;
+                        context.Cabinet.Attach(CurrentCabinet);
+                        context.Entry(CurrentCabinet).State = EntityState.Modified;
                     }
                     context.SaveChanges();
-                } // Context disposed
-
-                DialogResult = true; // Indicate success
+                }
+                DialogResult = true;
                 Close();
             }
             catch (DbUpdateException dbEx)
@@ -89,7 +85,7 @@ namespace Diploma1._1.View.CRUD
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false; // Indicate cancellation
+            DialogResult = false;
             Close();
         }
     }

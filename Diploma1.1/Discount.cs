@@ -23,7 +23,7 @@ namespace Diploma1._1
         public int DiscountID { get; set; }
         public string DiscountName { get; set; }
         public Nullable<bool> IsActiveDiscount { get; set; }
-        public string DiscountValue { get; set; }
+        public Nullable<int> DiscountValue { get; set; }
         public Nullable<System.DateTime> DateCreation { get; set; }
         public Nullable<System.DateTime> DateStart { get; set; }
         public Nullable<System.DateTime> DateEnd { get; set; }
