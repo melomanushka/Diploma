@@ -3,170 +3,84 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Diploma1._1.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1200"
-      Title="Журнал посещаемости">
+      d:DesignHeight="700" d:DesignWidth="1000"
+      Title="Журнал успеваемости">
 
-    <Grid Background="#F5F5F5">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок -->
-        <Border Background="White" 
-                BorderBrush="#E0E0E0" 
-                BorderThickness="0,0,0,1" 
-                Padding="20,15">
-            <TextBlock Text="Журнал посещаемости" 
-                     FontSize="24" 
-                     FontWeight="Bold" 
-                     Foreground="#333333"/>
-        </Border>
-
-        <!-- Панель фильтров -->
-        <Border Grid.Row="1" 
-                Background="White" 
-                BorderBrush="#E0E0E0" 
-                BorderThickness="0,0,0,1" 
-                Padding="20,15">
-            <Grid>
+        <StackPanel Grid.Row="0" Margin="20">
+            <TextBlock Text="Журнал успеваемости" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,20"/>
+            
+            <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Группа:" 
-                         VerticalAlignment="Center" 
-                         Margin="0,0,10,0"/>
+                          VerticalAlignment="Center"
+                          Margin="0,0,10,0"/>
                 <ComboBox x:Name="GroupComboBox" 
-                         Grid.Column="1" 
-                         Margin="0,0,20,10"
-                         DisplayMemberPath="GroupName"
-                         SelectedValuePath="GroupID"/>
+                         Grid.Column="1"
+                         Margin="0,0,20,0"
+                         SelectionChanged="GroupComboBox_SelectionChanged"/>
 
-                <TextBlock Text="Курс:" 
-                         Grid.Column="2" 
-                         VerticalAlignment="Center" 
-                         Margin="0,0,10,0"/>
-                <ComboBox x:Name="CourseComboBox" 
-                         Grid.Column="3" 
-                         Margin="0,0,20,10"
-                         DisplayMemberPath="CourseName"
-                         SelectedValuePath="CourseID"/>
-
-                <TextBlock Text="Период:" 
-                         Grid.Column="4" 
-                         VerticalAlignment="Center" 
-                         Margin="0,0,10,0"/>
-                
-                <StackPanel Grid.Column="5" 
-                          Orientation="Horizontal" 
-                          Margin="0,0,20,10">
-                    <DatePicker x:Name="StartDatePicker" 
-                              Width="90" 
-                              Margin="0,0,5,0"/>
-                    <TextBlock Text="-" 
-                             VerticalAlignment="Center" 
-                             Margin="5,0"/>
-                    <DatePicker x:Name="EndDatePicker" 
-                              Width="90"/>
-                </StackPanel>
-
-                <Button Margin="10" x:Name="ApplyFilterButton" 
-                        Grid.Column="6" 
-                        Content="Применить" 
-                        Padding="15,8" 
-                        Background="#2196F3" 
-                        Foreground="White" 
-                        BorderThickness="0"
-                        Click="ApplyFilterButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="4"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                
+                <TextBlock Text="Дисциплина:" 
+                          Grid.Column="2"
+                          VerticalAlignment="Center"
+                          Margin="0,0,10,0"/>
+                <ComboBox x:Name="SubjectComboBox" 
+                         Grid.Column="3"
+                         SelectionChanged="SubjectComboBox_SelectionChanged"/>
             </Grid>
-        </Border>
 
-        <!-- Таблица посещаемости -->
-        <DataGrid x:Name="AttendanceDataGrid" 
-                  Grid.Row="2" 
-                  Margin="20" 
-                  Background="White" 
-                  BorderBrush="#E0E0E0" 
-                  BorderThickness="1" 
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Дата занятия:" 
+                          VerticalAlignment="Center"
+                          Margin="0,0,10,0"/>
+                <DatePicker x:Name="LessonDatePicker" 
+                           Grid.Column="1"
+                           SelectedDateChanged="LessonDatePicker_SelectedDateChanged"/>
+            </Grid>
+        </StackPanel>
+
+        <DataGrid x:Name="GradesDataGrid" 
+                  Grid.Row="1" 
+                  Margin="20"
                   AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Студент" 
+                <DataGridTextColumn Header="№" 
+                                  Binding="{Binding Number}" 
+                                  Width="50"
+                                  IsReadOnly="True"/>
+                <DataGridTextColumn Header="ФИО студента" 
                                   Binding="{Binding StudentName}" 
-                                  Width="*"/>
-                <DataGridTextColumn Header="Дата" 
-                                  Binding="{Binding Date, StringFormat=dd.MM.yyyy}" 
-                                  Width="100"/>
-                <DataGridTextColumn Header="Время" 
-                                  Binding="{Binding Time}" 
-                                  Width="100"/>
-                <DataGridTextColumn Header="Статус" 
-                                  Binding="{Binding Status}" 
-                                  Width="100"/>
-                <DataGridTemplateColumn Header="Действия" 
-                                      Width="120">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="✎" 
-                                        Padding="5,2" 
-                                        Margin="0,0,5,0" 
-                                        Background="#2196F3" 
-                                        Foreground="White" 
-                                        BorderThickness="0"
-                                        Click="EditAttendance_Click">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="4"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
-                                <Button Content="✓" 
-                                        Padding="5,2" 
-                                        Margin="0,0,5,0" 
-                                        Background="#4CAF50" 
-                                        Foreground="White" 
-                                        BorderThickness="0"
-                                        Click="MarkPresent_Click">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="4"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
-                                <Button Content="✕" 
-                                        Padding="5,2" 
-                                        Background="#F44336" 
-                                        Foreground="White" 
-                                        BorderThickness="0"
-                                        Click="MarkAbsent_Click">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="4"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                  Width="*"
+                                  IsReadOnly="True"/>
+                <DataGridComboBoxColumn Header="Оценка" 
+                                      x:Name="GradeColumn"
+                                      SelectedItemBinding="{Binding Grade}"
+                                      Width="100"/>
+                <DataGridTextColumn Header="Примечание" 
+                                  Binding="{Binding Note}" 
+                                  Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

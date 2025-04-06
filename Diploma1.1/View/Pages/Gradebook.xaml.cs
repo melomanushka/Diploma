@@ -1,6 +1,7 @@
 ﻿using Diploma1._1.Model;
 using Diploma1._1.View.CRUD;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -13,58 +14,101 @@ namespace Diploma1._1.View.Pages
     /// </summary>
     public partial class Gradebook : Page
     {
-        private ObservableCollection<AttendanceItem> attendanceItems;
+        private ObservableCollection<GradeRecord> gradeRecords;
+        private List<string> grades = new List<string> { "5", "4", "3", "2", "Н" }; // Возможные оценки
         private Dimploma1Entities context;
 
         public Gradebook()
         {
             InitializeComponent();
             context = new Dimploma1Entities();
-            attendanceItems = new ObservableCollection<AttendanceItem>();
-            AttendanceDataGrid.ItemsSource = attendanceItems;
-
-            InitializeComboBoxes();
-            SetDefaultDates();
+            InitializeControls();
         }
 
-        private void InitializeComboBoxes()
+        private void InitializeControls()
         {
-            // Заполняем комбобокс групп
-            var groups = context.Group.ToList();
-            GroupComboBox.ItemsSource = groups;
+            // Инициализация коллекции для хранения оценок
+            gradeRecords = new ObservableCollection<GradeRecord>();
+            GradesDataGrid.ItemsSource = gradeRecords;
 
-            // Заполняем комбобокс курсов
-            var courses = context.Course.ToList();
-            CourseComboBox.ItemsSource = courses;
+            // Установка возможных оценок в комбобокс
+            ((DataGridComboBoxColumn)GradesDataGrid.Columns[2]).ItemsSource = grades;
+
+            // Здесь должна быть загрузка групп из базы данных
+            GroupComboBox.ItemsSource = new List<string> { "Группа 1", "Группа 2", "Группа 3" };
+
+            // Здесь должна быть загрузка предметов из базы данных
+            SubjectComboBox.ItemsSource = new List<string> { "Математика", "Физика", "Информатика" };
+
+            // Установка текущей даты
+            LessonDatePicker.SelectedDate = DateTime.Today;
         }
 
-        private void SetDefaultDates()
+        private void GroupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Устанавливаем текущую дату в качестве начальной
-            StartDatePicker.SelectedDate = DateTime.Today;
-            // Устанавливаем дату через неделю в качестве конечной
-            EndDatePicker.SelectedDate = DateTime.Today.AddDays(7);
+            if (GroupComboBox.SelectedItem != null)
+            {
+                LoadStudents();
+            }
+        }
+
+        private void SubjectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SubjectComboBox.SelectedItem != null && GroupComboBox.SelectedItem != null)
+            {
+                LoadGrades();
+            }
+        }
+
+        private void LessonDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LessonDatePicker.SelectedDate.HasValue && GroupComboBox.SelectedItem != null && SubjectComboBox.SelectedItem != null)
+            {
+                LoadGrades();
+            }
+        }
+
+        private void LoadStudents()
+        {
+            // Здесь должна быть загрузка студентов из базы данных
+            gradeRecords.Clear();
+            // Пример данных
+            for (int i = 1; i <= 5; i++)
+            {
+                gradeRecords.Add(new GradeRecord
+                {
+                    Number = i,
+                    StudentName = $"Студент {i}",
+                    Grade = null,
+                    Note = ""
+                });
+            }
+        }
+
+        private void LoadGrades()
+        {
+            // Здесь должна быть загрузка оценок из базы данных
+            // на основе выбранной группы, предмета и даты
         }
 
         private void LoadAttendanceData()
         {
-            if (GroupComboBox.SelectedValue == null || CourseComboBox.SelectedValue == null ||
-                StartDatePicker.SelectedDate == null || EndDatePicker.SelectedDate == null)
+            if (GroupComboBox.SelectedValue == null || SubjectComboBox.SelectedValue == null ||
+                LessonDatePicker.SelectedDate == null)
                 return;
 
             int groupId = (int)GroupComboBox.SelectedValue;
-            int courseId = (int)CourseComboBox.SelectedValue;
-            DateTime startDate = StartDatePicker.SelectedDate.Value;
-            DateTime endDate = EndDatePicker.SelectedDate.Value;
+            int subjectId = (int)SubjectComboBox.SelectedValue;
+            DateTime lessonDate = LessonDatePicker.SelectedDate.Value;
 
-            // Загружаем расписание для выбранной группы и курса
+            // Загружаем расписание для выбранной группы и предмета
             var schedule = context.Schedule
-                .Where(s => s.GroupID == groupId && s.CourseID == courseId &&
-                           s.ClassDate >= startDate && s.ClassDate <= endDate)
+                .Where(s => s.GroupID == groupId && s.CourseID == subjectId &&
+                           s.ClassDate == lessonDate)
                 .OrderBy(s => s.ClassDate)
                 .ToList();
 
-            attendanceItems.Clear();
+            gradeRecords.Clear();
 
             foreach (var scheduleItem in schedule)
             {
@@ -93,98 +137,43 @@ namespace Diploma1._1.View.Pages
                         }
                     }
 
-                    attendanceItems.Add(new AttendanceItem
+                    gradeRecords.Add(new GradeRecord
                     {
-                        ScheduleID = scheduleItem.ScheduleID,
-                        StudentID = student.StudentID,
+                        Number = 1, // Assuming a single grade per student
                         StudentName = $"{student.LastName} {student.FirstName} {student.MiddleName}",
-                        Date = scheduleItem.ClassDate.Value,
-                        Time = $"{scheduleItem.Time.TimeStart.Value.Hours:D2}:{scheduleItem.Time.TimeStart.Value.Minutes:D2}",
-                        Status = status,
-                        StatusAttendanceID = attendance?.StatusAttendanceID
+                        Grade = status,
+                        Note = ""
                     });
                 }
             }
         }
 
-        private void UpdateAttendanceStatus(AttendanceItem item, string statusName)
+        private void UpdateGrade(GradeRecord item, string grade)
         {
-            // Получаем ID статуса посещаемости по его названию
-            var statusAttendance = context.StatusAttendance
-                .FirstOrDefault(sa => sa.StatusAttendanceName == statusName);
-
-            if (statusAttendance == null)
-            {
-                MessageBox.Show("Статус посещаемости не найден в базе данных", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            var attendance = context.Attendance
-                .FirstOrDefault(a => a.ScheduleID == item.ScheduleID &&
-                                   a.StudentID == item.StudentID);
-
-            if (attendance == null)
-            {
-                attendance = new Attendance
-                {
-                    ScheduleID = item.ScheduleID,
-                    StudentID = item.StudentID,
-                    StatusAttendanceID = statusAttendance.StatusAttendanceID
-                };
-                context.Attendance.Add(attendance);
-            }
-            else
-            {
-                attendance.StatusAttendanceID = statusAttendance.StatusAttendanceID;
-            }
-
-            context.SaveChanges();
-            LoadAttendanceData();
+            item.Grade = grade;
+            // Save changes to database
+            // This is a placeholder and should be replaced with actual database saving logic
         }
 
-        private void MarkPresent_Click(object sender, RoutedEventArgs e)
+        private void EditGrade_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.DataContext is AttendanceItem item)
-            {
-                UpdateAttendanceStatus(item, "Присутствует");
-            }
-        }
-
-        private void MarkAbsent_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is AttendanceItem item)
-            {
-                UpdateAttendanceStatus(item, "Отсутствует");
-            }
-        }
-        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoadAttendanceData();
-        }
-
-        private void EditAttendance_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is AttendanceItem item)
-            {
-                // Открываем окно редактирования посещаемости
-                var editWindow = new EditAttendanceWindow(item);
-                if (editWindow.ShowDialog() == true)
-                {
-                    LoadAttendanceData();
-                }
-            }
+            //if (sender is Button button && button.DataContext is GradeRecord item)
+            //{
+            //    // Open grade editing window
+            //    var editWindow = new EditGradeWindow(item);
+            //    if (editWindow.ShowDialog() == true)
+            //    {
+            //        LoadGrades();
+            //    }
+            //}
         }
     }
 
-    public class AttendanceItem
+    public class GradeRecord
     {
-        public int ScheduleID { get; set; }
-        public int StudentID { get; set; }
+        public int Number { get; set; }
         public string StudentName { get; set; }
-        public DateTime Date { get; set; }
-        public string Time { get; set; }
-        public string Status { get; set; }
-        public int? StatusAttendanceID { get; set; }
+        public string Grade { get; set; }
+        public string Note { get; set; }
     }
-
 }
