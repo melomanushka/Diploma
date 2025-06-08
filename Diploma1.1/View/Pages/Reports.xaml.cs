@@ -110,14 +110,12 @@ namespace Diploma1._1.View.Pages
                         break;
                     default:
                         MessageBox.Show($"Тип отчета '{selectedItem.Content}' не распознан.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                        ReportDataGrid.ItemsSource = null;
                         break;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Произошла ошибка при формировании отчета:\n{ex.Message}", "Ошибка базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
-                ReportDataGrid.ItemsSource = null;
             }
             finally
             {
@@ -216,7 +214,6 @@ namespace Diploma1._1.View.Pages
                 .ThenBy(s => s.Время)
                 .ToList();
 
-            ReportDataGrid.ItemsSource = scheduleData;
         }
 
         private void GenerateAttendanceReport(DateTime startDate, DateTime endDate)
@@ -239,8 +236,6 @@ namespace Diploma1._1.View.Pages
                .OrderBy(a => a.ДатаЗанятия)
                .ThenBy(a => a.Студент)
                .ToList();
-
-            ReportDataGrid.ItemsSource = attendanceData;
         }
 
         private void GenerateContractsReport(DateTime startDate, DateTime endDate)
@@ -267,37 +262,31 @@ namespace Diploma1._1.View.Pages
                .OrderBy(c => c.ДатаСоздания)
                .ToList();
 
-            ReportDataGrid.ItemsSource = contractsData;
         }
 
         // Заглушки для новых отчетов
         private void GeneratePaymentsReport(DateTime startDate, DateTime endDate)
         {
-            ReportDataGrid.ItemsSource = null;
             MessageBox.Show("Отчет по оплатам еще не реализован.");
         }
 
         private void GenerateTeachersReport(DateTime startDate, DateTime endDate)
         {
-            ReportDataGrid.ItemsSource = null;
             MessageBox.Show("Отчет по преподавателям еще не реализован.");
         }
 
         private void GenerateGroupsReport(DateTime startDate, DateTime endDate)
         {
-            ReportDataGrid.ItemsSource = null;
             MessageBox.Show("Отчет по учебным группам еще не реализован.");
         }
 
         private void GenerateClassroomUsageReport(DateTime startDate, DateTime endDate)
         {
-            ReportDataGrid.ItemsSource = null;
             MessageBox.Show("Отчет по использованию аудиторий еще не реализован.");
         }
 
         private void GenerateOverallPeriodReport(DateTime startDate, DateTime endDate)
         {
-            ReportDataGrid.ItemsSource = null;
             MessageBox.Show("Итоговый отчет за учебный период еще не реализован.");
         }
 
@@ -430,11 +419,6 @@ namespace Diploma1._1.View.Pages
         // --- Экспорт в Word с использованием DocX ---
         private void ExportReportToWord()
         {
-            if (ReportDataGrid.ItemsSource == null || !ReportDataGrid.Items.Cast<object>().Any())
-            {
-                MessageBox.Show("Нет данных для экспорта.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
 
             var selectedItem = ReportTypeComboBox.SelectedItem as ComboBoxItem;
             string reportType = selectedItem?.Content?.ToString() ?? "Отчет";
@@ -451,7 +435,6 @@ namespace Diploma1._1.View.Pages
                 Mouse.OverrideCursor = Cursors.Wait;
                 try
                 {
-                    CreateWordReport(saveFileDialog.FileName, reportType, ReportDataGrid.ItemsSource);
                     MessageBox.Show($"Отчет успешно сохранен:\n{saveFileDialog.FileName}", "Экспорт завершен", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
