@@ -75,7 +75,7 @@
                                             Width="150" 
                                             Margin="0,0,10,0"/>
                                     <Button x:Name="ExportReportButton" 
-                                            Content="Экспорт в Excel" 
+                                            Content="Экспорт в Word" 
                                             Click="ExportReportButton_Click" 
                                             Width="150"/>
                                 </StackPanel>
@@ -145,7 +145,7 @@
                                             Width="150" 
                                             Margin="0,0,10,0"/>
                                     <Button x:Name="ExportStatisticsButton" 
-                                            Content="Экспорт в Excel" 
+                                            Content="Экспорт в Word" 
                                             Click="ExportStatisticsButton_Click" 
                                             Width="150"/>
                                 </StackPanel>
@@ -157,13 +157,13 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <DataGrid x:Name="StatisticsDataGrid" 
                                      Grid.Column="0"
                                      AutoGenerateColumns="True" 
                                      Height="400" 
                                      Margin="0,10,5,0"/>
-                            
+
                             <!-- Место для графика -->
                             <Border Grid.Column="1" 
                                     Background="LightGray" 

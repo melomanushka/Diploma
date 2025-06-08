@@ -19,8 +19,8 @@ namespace Diploma1._1.View.CRUD
         private ObservableCollection<Course> courses;
         private ObservableCollection<Group> groups;
         private ObservableCollection<Cabinet> cabinets;
-        private ObservableCollection<Employee> teachers;
-        private ObservableCollection<Student> students;
+        //private ObservableCollection<Employee> teachers;
+        //private ObservableCollection<Student> students;
 
         public EditScheduleItem(int scheduleId = 0)
         {
