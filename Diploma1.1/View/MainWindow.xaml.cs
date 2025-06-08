@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Diploma1._1.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,13 @@ namespace Diploma1._1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+             Home home = new Home();
+            home.Show();
             this.Close();
         }
     }
